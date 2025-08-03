@@ -4,11 +4,13 @@
   inputs = {
     # official package sources:
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-darwin.url = "github:nix-darwin/nix-darwin/master";
     nixpkgs-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-wsl.url = "github:nix-community/NixOS-WSL/main";
     nixpkgs-wsl.inputs.nixpkgs.follows = "nixpkgs";
     hardware.url = "github:nixos/nixos-hardware";
+    systems.url = "github:nix-systems/default";
 
     # sources to declare user and home settings:
     home-manager.url = "github:nix-community/home-manager";
@@ -16,7 +18,7 @@
    
     # sources to declare homebrew casks and brews:
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
+    #nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
     homebrew-core.url = "github:homebrew/homebrew-core";
     homebrew-cask.url = "github:homebrew/homebrew-cask";
     homebrew-core.flake = false;
@@ -27,7 +29,7 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # sources to declare virtual machines:
-    nixvirt.url = "https://flakehub.com/f/AshleyYakely/NixVirt/*.tar.gz";
+    nixvirt.url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
     nixvirt.inputs.nixpkgs.follows = "nixpkgs";
 
     # sources to declare secrets:
@@ -42,25 +44,34 @@
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     nix-colors.url = "github:misterio77/nix-colors";
-    nix-colors.inputs.nixpkgs.follows = "nixpkgs";
+    #nix-colors.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-util.url = "github:hraban/mac-app-util";
     mac-app-util.inputs.nixpkgs.follows = "nixpkgs";
 
     # sources for individual programs:
   };
 
-  outputs = { self, nixpkgs, nix-darwin, ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, systems, home-manager,... }@inputs:
     let
       inherit (self) outputs;
-      forAllSystems = nixpkgs.lib.genAttrs [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-linux"
-      ];
+      lib = nixpkgs.lib // home-manager.lib;
+      #lib = nixpkgs.lib.extend (self: super: { 
+      #  custom = import ./lib { inherit (nixpkgs) lib; }; 
+      #});
+      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+      pkgsFor = lib.genAttrs (import systems) (
+        system:
+          import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          }
+      );
 
-      lib = nixpkgs.lib.extend (self: super: { 
-        custom = import ./lib { inherit (nixpkgs) lib; }; 
-      });
+      #forAllSystems = nixpkgs.lib.genAttrs [
+      #  "aarch64-darwin"
+      #  "aarch64-linux"
+      #  "x86_64-linux"
+      #];
 
       # Get all hosts as a list of { role, host, system }
       allHosts = lib.flatten (
@@ -70,7 +81,7 @@
             role = role;
             host = host;
             system = (import (rolePath + "/${host}/system.nix") { 
-                inherit lib; }).system or "nixos";
+                inherit lib; }).system or "x86_64-linux";
             }) (builtins.attrNames (builtins.readDir rolePath))
         ) (builtins.attrNames (builtins.readDir ./hosts))
       );
@@ -81,21 +92,30 @@
 
 
     in {
+      inherit lib;
+      systemModules = import ./modules/system;
+      userModules = import ./modules/user;
+
+      overlays = import ./overlays {inherit inputs outputs;};
+
+      packages = forEachSystem (pkgs: import ./packages {inherit pkgs;});
+      devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
+      formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
 
       # custom packages:
-      packages = forAllSystems (
-        system: import ./packages nixpkgs.legacyPackages.${system}
-      );
+      #packages = forAllSystems (
+      #  system: import ./packages nixpkgs.legacyPackages.${system}
+      #);
       # modifications on official packages:
-      overlays = import ./overlays {inherit inputs;};
+      #overlays = import ./overlays {inherit inputs;};
       # system modules:
-      systemModules = import ./modules/system;
+      #systemModules = import ./modules/system;
       # home-manager modules:
-      userModules = import ./modules/user;
+      #userModules = import ./modules/user;
       # nix formatter:
-      formatter = forAllSystems (
-        system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
-      );
+      #formatter = forAllSystems (
+      #  system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
+      #);
 
 
       # automatically select correct build from localhost name:
@@ -127,6 +147,7 @@
         }) darwinHosts
       );
 
+      #standalone homemanager:
       #homeConfigurations = { };
 
     };
