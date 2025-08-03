@@ -18,8 +18,8 @@
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
     homebrew-core.url = "github:homebrew/homebrew-core";
-    homebrew-core.flake = false;
     homebrew-cask.url = "github:homebrew/homebrew-cask";
+    homebrew-core.flake = false;
     homebrew-cask.flake = false;
 
     # sources to declare disk partitions:
@@ -38,7 +38,7 @@
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
 
-    # sources to style programs and shells:
+    # sources to theme programs and shells:
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
     nix-colors.url = "github:misterio77/nix-colors";
@@ -57,7 +57,31 @@
         "aarch64-linux"
         "x86_64-linux"
       ];
+
+      lib = nixpkgs.lib.extend (self: super: { 
+        custom = import ./lib { inherit (nixpkgs) lib; }; 
+      });
+
+      # Get all hosts as a list of { role, host, system }
+      allHosts = lib.flatten (
+        map (role:
+          let rolePath = ./hosts + "/${role}";
+          in map (host: {
+            role = role;
+            host = host;
+            system = (import (rolePath + "/${host}/system.nix") { 
+                inherit lib; }).system or "nixos";
+            }) (builtins.attrNames (builtins.readDir rolePath))
+        ) (builtins.attrNames (builtins.readDir ./hosts))
+      );
+
+      # Partition hosts by their specified system
+      nixosHosts = lib.filter (h: lib.hasSuffix "-linux" h.system) allHosts;
+      darwinHosts = lib.filter (h: lib.hasSuffix "-darwin" h.system) allHosts;
+
+
     in {
+
       # custom packages:
       packages = forAllSystems (
         system: import ./packages nixpkgs.legacyPackages.${system}
@@ -69,19 +93,41 @@
       # home-manager modules:
       userModules = import ./modules/user;
       # nix formatter:
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = forAllSystems (
+        system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
+      );
 
-      darwinConfigurations = { 
 
-      }; 
+      # automatically select correct build from localhost name:
+      nixosConfigurations = lib.listToAttrs (
+        map ({ role, host, ... }: {
+          name = host;
+          value = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs lib;
+              isDarwin = false;
+              role = role;
+            };
+            modules = [ "./hosts/${role}/${host}/configuration.nix" ];
+          };
+        }) nixosHosts
+      );
 
-      nixosConfigurations = { 
+      darwinConfigurations = lib.listToAttrs (
+        map ({ role, host, ... }: {
+          name = host;
+          value = nix-darwin.lib.darwinSystem {
+            specialArgs = {
+              inherit inputs lib;
+              isDarwin = true;
+              role = role;
+            };
+            modules = [ "./hosts/${role}/${host}/configuration.nix" ];
+          };
+        }) darwinHosts
+      );
 
-      };
-
-      homeConfigurations = { 
-
-      };
+      #homeConfigurations = { };
 
     };
 
