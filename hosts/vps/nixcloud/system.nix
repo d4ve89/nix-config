@@ -1,3 +1,3 @@
 {
-  system = "nixos";
+  system = "aarch64-linux";
 }
