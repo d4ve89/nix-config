@@ -51,6 +51,8 @@
     mac-app-util.inputs.nixpkgs.follows = "nixpkgs";
 
     # sources for individual programs:
+    curd.url = "github:Wraient/curd";
+    
   };
 
   outputs = { self, nixpkgs, nix-darwin, systems, home-manager,... }@inputs:
@@ -58,7 +60,7 @@
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
 
-      #forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
       pkgsFor = lib.genAttrs (import systems) (
         system:
           import nixpkgs {
@@ -94,12 +96,12 @@
       inherit lib;
       nixosModules = import ./modules/system;
       homeManagerModules = import ./modules/user;
-      #overlays = import ./overlays {inherit inputs;};
-      #packages = forEachSystem (pkgs: import ./packages {inherit pkgs;});
-      packages = lib.genAttrs (import systems) (system: import ./packages { pkgs = pkgsFor.${system}; });
+      overlays = import ./overlays {inherit inputs;};
+      packages = forEachSystem (pkgs: import ./packages {inherit pkgs;});
+      #packages = lib.genAttrs (import systems) (system: import ./packages { pkgs = pkgsFor.${system}; });
       #devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
-      #formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
-      formatter = lib.genAttrs (import systems) (system: pkgsFor.${system}.nixfmt-rfc-style);
+      formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
+      #formatter = lib.genAttrs (import systems) (system: pkgsFor.${system}.nixfmt-rfc-style);
 
       # custom packages:
       #packages = forAllSystems (
@@ -147,7 +149,30 @@
             };
             modules = [ 
               ./hosts/common/core/default.nix
-              ./hosts/${role}/${host}/configuration.nix ];
+              ./hosts/${role}/${host}/configuration.nix 
+              home-manager.darwinModules.home-manager {
+                users.users.david.name = "david";
+                users.users.david.home = "/Users/david";
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = { inherit inputs; };
+                  users.david = import ./hosts/${role}/${host}/home.nix;
+                };
+              }
+              inputs.nix-homebrew.darwinModules.nix-homebrew {
+                nix-homebrew = {
+                  enable = true;
+                  enableRosetta = false;
+                  user = "david";
+                  taps = {
+                    "homebrew/homebrew-core" = inputs.homebrew-core;
+                    "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                  };
+                  mutableTaps = true;
+                };
+              }
+            ];
           };
         }) darwinHosts
       );

@@ -1,0 +1,20 @@
+#theme = ayu
+#theme = "Banana Blueberry" 
+## has orange cursor! and is blueish
+#theme = catppuccin-frappe
+#theme = catppuccin-macchiato
+#theme = desert # has green cursor
+#theme = gruvbox-material
+#theme = "Github Dark"
+#theme = IC_Orange_PPL
+#theme = GruvboxDark 
+# has egg-shell cursor
+
+#theme = tokyonight 
+#theme = snazzy
+#theme = xcodedark
+shell-integration = zsh
+confirm-close-surface = false
+quit-after-last-window-closed = true
+background-opacity = 0.90
+custom-shader = shaders/cursor_smear.glsl

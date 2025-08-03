@@ -5,10 +5,10 @@
 
   imports = [
     inputs.nvf.homeManagerModules.default
-    ../modules/user/nvf-module.nix
+    ../../../modules/user/nvf/default.nix
     inputs.nix-colors.homeManagerModules.default
-    ../modules/user/nix-colors_p10k.nix
-    ../modules/user/nix-colors_zsh.nix
+    ../../../modules/user/nix-colors/p10k.nix
+    ../../../modules/user/nix-colors/zsh.nix
     #../modules/user/aerospace-module.nix
     inputs.stylix.homeModules.stylix
     #../../default-home.nix
@@ -22,10 +22,10 @@
 
   # managing dotfiles through 'home.file'.
   config.home.file = {
-    ".config/zsh/p10k.zsh".source = ../dotfiles/config/zsh/p10k.zsh;
-    ".config/ghostty/config".source = ../dotfiles/config/ghostty/config;
+    ".config/zsh/p10k.zsh".source = ../../../dotfiles/config/zsh/p10k.zsh;
+    ".config/ghostty/config".source = ../../../dotfiles/config/ghostty/config;
     #".config/ghostty/shaders/cursor_smear.glsl".source = ../dotfiles/config/ghostty/shaders/cursor_smear.glsl;
-    ".config/aerospace/aerospace.toml".source = ../dotfiles/config/aerospace/aerospace.toml;
+    ".config/aerospace/aerospace.toml".source = ../../../dotfiles/config/aerospace/aerospace.toml;
     #".config/zsh/p10k-colors.zsh".source = dotfiles/.config/zsh/p10k-colors.zsh;
     # You can also set the file content as String:
     # ".gradle/gradle.properties".text = ''
@@ -64,7 +64,7 @@
     userName = "d4ve89";
     #userEmail = "d.djaja2@shg.schule.koeln";
     userEmail = "37449430+d4ve89@users.noreply.github.com";
-    defaultBranch = "main";
+    extraConfig.init.defaultBranch = "main";
     aliases = {
       pu = "push";
       ch = "checkout";

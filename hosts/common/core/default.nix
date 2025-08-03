@@ -31,8 +31,8 @@
     newcomputermodern
   ];
 
-  stylix = {
-    enable = false;
+  #stylix = {
+  #enable = false;
     #image = ./wallpaper.png
     #image = pkgs.fetchurl { url= ; hash= ;};
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
@@ -41,7 +41,7 @@
     #opacity = {
     #  terminal = 0.8;
     #};
-  };
+  #};
 
 
 

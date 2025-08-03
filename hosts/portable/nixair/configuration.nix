@@ -8,8 +8,8 @@
   users.users.david.home = "/Users/david";
 
   environment.systemPackages = [
-    pkgs.ghostty-bin
     pkgs.aerospace
+    #pkgs.ghostty-bin
     pkgs.sketchybar-app-font
     pkgs.sketchybar
     pkgs.jankyborders
@@ -25,7 +25,7 @@
         "choose-gui"
       ];
       casks = [
-      #"ghostty"
+        "ghostty"
         "hammerspoon"
         "nextcloud-vfs"
         "karabiner-elements"
@@ -56,7 +56,8 @@
     dock.static-only = false;
 	  dock.persistent-apps = [
 	    "/Applications/Orion.app"
-	    "${pkgs.ghostty-bin}/Applications/Ghostty.app"
+      #"${pkgs.ghostty-bin}/Applications/Ghostty.app"
+      "/Applications/Ghostty.app"
 	    "/System/Applications/Mail.app"
 	    "/System/Applications/Calendar.app"
     ];
