@@ -128,7 +128,9 @@
               isDarwin = false;
               role = role;
             };
-            modules = [ ./hosts/${role}/${host}/configuration.nix ];
+            modules = [ 
+              ./hosts/common/core/default.nix
+              ./hosts/${role}/${host}/configuration.nix ];
           };
         }) nixosHosts
       );
@@ -143,7 +145,9 @@
               isDarwin = true;
               role = role;
             };
-            modules = [ ./hosts/${role}/${host}/configuration.nix ];
+            modules = [ 
+              ./hosts/common/core/default.nix
+              ./hosts/${role}/${host}/configuration.nix ];
           };
         }) darwinHosts
       );
