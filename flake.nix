@@ -8,7 +8,7 @@
     nixpkgs-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-wsl.url = "github:nix-community/NixOS-WSL/main";
     nixpkgs-wsl.inputs.nixpkgs.follows = "nixpkgs";
-    hardware.url = "github:nixos-hardware";
+    hardware.url = "github:nixos/nixos-hardware";
 
     # sources to declare user and home settings:
     home-manager.url = "github:nix-community/home-manager";
