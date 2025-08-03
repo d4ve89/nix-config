@@ -10,6 +10,8 @@
     nixpkgs-wsl.url = "github:nix-community/NixOS-WSL/main";
     nixpkgs-wsl.inputs.nixpkgs.follows = "nixpkgs";
     hardware.url = "github:nixos/nixos-hardware";
+
+    # default system names (aarch-darwin, x86_64-linux, etc.):
     systems.url = "github:nix-systems/default";
 
     # sources to declare user and home settings:
@@ -55,10 +57,8 @@
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
-      #lib = nixpkgs.lib.extend (self: super: { 
-      #  custom = import ./lib { inherit (nixpkgs) lib; }; 
-      #});
-      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+
+      #forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
       pkgsFor = lib.genAttrs (import systems) (
         system:
           import nixpkgs {
@@ -73,34 +73,33 @@
       #  "x86_64-linux"
       #];
 
-      # Get all hosts as a list of { role, host, system }
-      allHosts = lib.flatten (
+      # Get all hosts as a list of { role, host, arch }
+      hosts = lib.flatten (
         map (role:
           let rolePath = ./hosts + "/${role}";
           in map (host: {
             role = role;
             host = host;
-            system = (import (rolePath + "/${host}/system.nix") { 
-                inherit lib; }).system or "x86_64-linux";
+            arch = import (rolePath + "/${host}/system.nix");
             }) (builtins.attrNames (builtins.readDir rolePath))
-        ) (builtins.attrNames (builtins.readDir ./hosts))
+        ) (lib.filter (role: role != "common") (builtins.attrNames (builtins.readDir ./hosts)))
       );
 
       # Partition hosts by their specified system
-      nixosHosts = lib.filter (h: lib.hasSuffix "-linux" h.system) allHosts;
-      darwinHosts = lib.filter (h: lib.hasSuffix "-darwin" h.system) allHosts;
+      nixosHosts = lib.filter (h: lib.hasSuffix "-linux" h.arch) hosts;
+      darwinHosts = lib.filter (h: lib.hasSuffix "-darwin" h.arch) hosts;
 
 
     in {
       inherit lib;
-      systemModules = import ./modules/system;
-      userModules = import ./modules/user;
-
-      overlays = import ./overlays {inherit inputs outputs;};
-
-      packages = forEachSystem (pkgs: import ./packages {inherit pkgs;});
-      devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
-      formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
+      nixosModules = import ./modules/system;
+      homeManagerModules = import ./modules/user;
+      #overlays = import ./overlays {inherit inputs;};
+      #packages = forEachSystem (pkgs: import ./packages {inherit pkgs;});
+      packages = lib.genAttrs (import systems) (system: import ./packages { pkgs = pkgsFor.${system}; });
+      #devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
+      #formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
+      formatter = lib.genAttrs (import systems) (system: pkgsFor.${system}.nixfmt-rfc-style);
 
       # custom packages:
       #packages = forAllSystems (
@@ -120,29 +119,31 @@
 
       # automatically select correct build from localhost name:
       nixosConfigurations = lib.listToAttrs (
-        map ({ role, host, ... }: {
+        map ({ role, host, arch, ... }: {
           name = host;
           value = nixpkgs.lib.nixosSystem {
+            system = arch;
             specialArgs = {
               inherit inputs lib;
               isDarwin = false;
               role = role;
             };
-            modules = [ "./hosts/${role}/${host}/configuration.nix" ];
+            modules = [ ./hosts/${role}/${host}/configuration.nix ];
           };
         }) nixosHosts
       );
 
       darwinConfigurations = lib.listToAttrs (
-        map ({ role, host, ... }: {
+        map ({ role, host, arch }: {
           name = host;
           value = nix-darwin.lib.darwinSystem {
+            system = arch;
             specialArgs = {
               inherit inputs lib;
               isDarwin = true;
               role = role;
             };
-            modules = [ "./hosts/${role}/${host}/configuration.nix" ];
+            modules = [ ./hosts/${role}/${host}/configuration.nix ];
           };
         }) darwinHosts
       );
@@ -151,5 +152,4 @@
       #homeConfigurations = { };
 
     };
-
 }
