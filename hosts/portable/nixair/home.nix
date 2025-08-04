@@ -10,16 +10,16 @@
 
   # host specific user packages:
   home.packages = [
-	pkgs.hello
-	pkgs.htop
+	  pkgs.hello
+	  pkgs.htop
+    #pkgs.activinspire
   ];
 
   # dotfiles for this host:
   home.file = {
-    "testfile2".target = "testfile_from_home.nix";
-    "testfile2".text = ''home.nix works'';
+    #"testfile2".target = "testfile_from_home.nix";
+    #"testfile2".text = ''home.nix works'';
   };
-
   programs.home-manager.enable = true;
 
   # You should not change this value, even if you update Home Manager. If you do

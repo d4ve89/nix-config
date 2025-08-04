@@ -52,22 +52,32 @@
 
     # sources for individual programs:
     curd.url = "github:Wraient/curd";
-    
+    #idea-c-pin2024.url = "github:NixOS/nixpkgs/c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
+
   };
 
-  outputs = { self, nixpkgs, nix-darwin, systems, home-manager,... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, systems, ... }@inputs:
     let
       inherit (self) outputs;
-      lib = nixpkgs.lib // home-manager.lib;
+      lib = nixpkgs.lib // inputs.home-manager.lib;
+
+      #inputs.idea-c-pin2024 = final: prev: {
+      #  jetbrains.idea-community-bin = inputs.idea-c-pin2024.legacyPackages.${prev.system}.jetbrains.idea-community-bin;
+      #};
 
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+
       pkgsFor = lib.genAttrs (import systems) (
         system:
           import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-          }
-      );
+            overlays = [
+              (self: super: import ./packages { pkgs = super; })
+            #inputs.idea-c-pin2024
+             ];
+           }
+        );
 
       #forAllSystems = nixpkgs.lib.genAttrs [
       #  "aarch64-darwin"
@@ -96,11 +106,29 @@
       inherit lib;
       nixosModules = import ./modules/system;
       homeManagerModules = import ./modules/user;
-      overlays = import ./overlays {inherit inputs;};
+      overlays = import ./overlays {inherit inputs outputs;};
       packages = forEachSystem (pkgs: import ./packages {inherit pkgs;});
+        
+      #packages = lib.genAttrs (import systems) (system: import ./packages { pkgs = pkgsFor.${system}; }); 
+
+      #packages = forEachSystem (
+      #  system:
+      #  let
+      #    pkgs = import nixpkgs {
+      #      inherit system;
+      #      overlays = [ self.overlays.default ];
+      #    };
+      #  in
+      #  nixpkgs.lib.packagesFromDirectoryRecursive {
+      #    callPackage = nixpkgs.lib.callPackageWith pkgs;
+      #    directory = ./packages;
+      #  }
+      #);
+      #packages = lib.genAttrs (import systems) (system: import ./packages {pkgs = pkgsFor.${system}; });
+
       #packages = lib.genAttrs (import systems) (system: import ./packages { pkgs = pkgsFor.${system}; });
       #devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
-      formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
+      #formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
       #formatter = lib.genAttrs (import systems) (system: pkgsFor.${system}.nixfmt-rfc-style);
 
       # custom packages:
@@ -126,7 +154,7 @@
           value = nixpkgs.lib.nixosSystem {
             system = arch;
             specialArgs = {
-              inherit inputs lib;
+              inherit inputs outputs lib;
               isDarwin = false;
               role = role;
             };
@@ -143,14 +171,14 @@
           value = nix-darwin.lib.darwinSystem {
             system = arch;
             specialArgs = {
-              inherit inputs lib;
+              inherit inputs outputs lib;
               isDarwin = true;
               role = role;
             };
             modules = [ 
               ./hosts/common/core/default.nix
               ./hosts/${role}/${host}/configuration.nix 
-              home-manager.darwinModules.home-manager {
+              inputs.home-manager.darwinModules.home-manager {
                 users.users.david.name = "david";
                 users.users.david.home = "/Users/david";
                 home-manager = {

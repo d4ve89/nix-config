@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, outputs, ... }:
 {
   #imports = [ ../../default-config.nix ]; not needed bc flake loads both
 
@@ -9,13 +9,14 @@
 
   environment.systemPackages = [
     pkgs.aerospace
-    #pkgs.ghostty-bin
+    #pkgs.ghostty-bin broken package
     pkgs.sketchybar-app-font
     pkgs.sketchybar
     pkgs.jankyborders
+    pkgs.jetbrains.idea-community-bin
     #pkgs.libreoffice no darwin-build available
-    #pkgs.teams
     inputs.curd.packages.aarch64-darwin.default
+    #pkgs.activinspire
   ];
 
     homebrew = {
@@ -38,10 +39,7 @@
         "libreoffice"
       ];
       masApps = {
-      #"Yoink" = 457622435;
         "Vimlike" = 1584519802;
-      #"Microsoft Teams" = 1113153706;
-      #"Microsoft OneNote" = 410395246;
       };
       onActivation.cleanup = "zap";
       onActivation.autoUpdate = true;
