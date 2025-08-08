@@ -9,17 +9,27 @@
 
   environment.systemPackages = [
     pkgs.aerospace
+    pkgs.yabai
     #pkgs.ghostty-bin broken package
     pkgs.sketchybar-app-font
     pkgs.sketchybar
     pkgs.jankyborders
+    pkgs.pandoc
+    #pkgs.texlive.combined.scheme-small
+    #pkgs.texlive.combined.scheme-medium
     pkgs.jetbrains.idea-community-bin
-    #pkgs.libreoffice no darwin-build available
+    #pkgs.temurin-bin-21
+    pkgs.jdk21
+    #pkgs.openjfx
+    #pkgs.jetbrains.jdk
+    #pkgs.scenebuilder
+    (pkgs.texlive.combine { 
+      inherit (pkgs.texlive) 
+      scheme-small enumitem soul titlesec ulem; })
     inputs.curd.packages.aarch64-darwin.default
-    #pkgs.activinspire
   ];
 
-    homebrew = {
+  homebrew = {
       enable = true;
       brews = [
         "mas"
@@ -33,6 +43,7 @@
         "dmenu-mac"
         "bluej"
         "greenfoot"
+        "scenebuilder"
         "microsoft-teams"
         "microsoft-onenote"
         "microsoft-word"
@@ -46,6 +57,17 @@
       onActivation.upgrade = true;
       global.autoUpdate = true;
   };
+
+  launchd.user.agents = {
+    setenv = {
+      command = ''
+        /bin/launchctl setenv JAVA_HOME ${pkgs.jdk21}
+        /bin/launchctl setenv PATH_TO_FX $HOME/Downloads/jfx-sdk-21.0.8/
+      '';
+      serviceConfig.RunAtLoad = true;
+    };
+  };
+
 
   system.defaults = {
     dock.autohide = true;
@@ -75,6 +97,9 @@
 	    KeyRepeat = 2;
     };
   };
+
+
+
   security.pam.services.sudo_local.touchIdAuth = true;
 
   # Set Git commit hash for darwin-version.

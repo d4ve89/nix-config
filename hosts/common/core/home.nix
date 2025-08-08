@@ -58,6 +58,22 @@
   #  };
   #};
 
+  config.programs.emacs = {
+    enable = true;
+    extraPackages = epkgs: [
+      #epkgs.doom
+      epkgs.org-modern
+      epkgs.org-download
+      epkgs.openwith-mode
+      epkgs.ob-mermaid
+      epkgs.org-roam-ui
+      epkgs.org-transclusion
+      epkgs.org-super-agenda
+      epkgs.timeblock
+      epkgs.evil
+    ]
+  }
+
   config.programs.git = {
     enable = true;
     #userName = "d.djaja";

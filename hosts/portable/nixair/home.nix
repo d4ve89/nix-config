@@ -13,7 +13,25 @@
 	  pkgs.hello
 	  pkgs.htop
     #pkgs.activinspire
+    #pkgs.temurin-bin-21
+    #pkgs.jdk21
+    #pkgs.jetbrains.jdk
+    pkgs.gradle 
+    pkgs.nodejs
   ];
+
+  #programs.java = {
+  #  enable = true;
+  #  package = pkgs.temurin-bin-21;
+    #package = pkgs.jetbrains.jdk-21;
+  #};
+
+  home.sessionVariables = {
+    #_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd";
+    #IDEA_JDK = lib.mkForce "${pkgs.temurin-bin-21}";
+    #JAVA_HOME = lib.mkForce "${pkgs.temurin-bin-21}/Contents/Home"; not needed/wrong
+    #GRADLE_HOME = "${pkgs.gradle}/lib/gradle";
+  };
 
   # dotfiles for this host:
   home.file = {
