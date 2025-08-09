@@ -5,6 +5,7 @@
 
   imports = [
     inputs.nvf.homeManagerModules.default
+    inputs.nix-doom-emacs-unstraightened.homeModule
     ../../../modules/user/nvf/default.nix
     inputs.nix-colors.homeManagerModules.default
     ../../../modules/user/nix-colors/p10k.nix
@@ -58,22 +59,32 @@
   #  };
   #};
 
-  config.programs.emacs = {
+  config.services.emacs = {
     enable = true;
+    #package = pkgs.emacs-macport;
+    
+  };
+
+  config.programs.doom-emacs = {
+    enable = true;
+    doomDir = ../../../dotfiles/config/doom;
     extraPackages = epkgs: [
       #epkgs.doom
       epkgs.org-modern
       epkgs.org-download
-      epkgs.openwith-mode
+      epkgs.openwith
       epkgs.ob-mermaid
       epkgs.org-roam-ui
       epkgs.org-transclusion
       epkgs.org-super-agenda
-      epkgs.timeblock
+      epkgs.time-block
       epkgs.evil
-    ]
-  }
-
+      epkgs.evil-tutor
+      #inputs.org-krita
+  #    #inputs.org-xournalpp
+    ];
+  };
+      #
   config.programs.git = {
     enable = true;
     #userName = "d.djaja";

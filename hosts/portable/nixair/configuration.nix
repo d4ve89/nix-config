@@ -25,7 +25,7 @@
     #pkgs.scenebuilder
     (pkgs.texlive.combine { 
       inherit (pkgs.texlive) 
-      scheme-small enumitem soul titlesec ulem; })
+      scheme-medium mlmodern enumitem soul titlesec ulem; })
     inputs.curd.packages.aarch64-darwin.default
   ];
 
@@ -34,6 +34,7 @@
       brews = [
         "mas"
         "choose-gui"
+        "coreutils"
       ];
       casks = [
         "ghostty"
