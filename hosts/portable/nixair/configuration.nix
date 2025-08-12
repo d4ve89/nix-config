@@ -15,8 +15,6 @@
     pkgs.sketchybar
     pkgs.jankyborders
     pkgs.pandoc
-    #pkgs.texlive.combined.scheme-small
-    #pkgs.texlive.combined.scheme-medium
     pkgs.jetbrains.idea-community-bin
     #pkgs.temurin-bin-21
     pkgs.jdk21
@@ -24,7 +22,7 @@
     #pkgs.jetbrains.jdk
     #pkgs.scenebuilder
     (pkgs.texlive.combine { 
-      inherit (pkgs.texlive) 
+      inherit (pkgs.texlive)  #scheme-small or #scheme-medium
       scheme-medium mlmodern enumitem soul titlesec ulem; })
     inputs.curd.packages.aarch64-darwin.default
   ];
@@ -34,6 +32,7 @@
       brews = [
         "mas"
         "choose-gui"
+      #"leader-key"
         "coreutils"
       ];
       casks = [
@@ -41,6 +40,9 @@
         "hammerspoon"
         "nextcloud-vfs"
         "karabiner-elements"
+        "zen"
+        "kindavim"
+        "raycast" #"ueli"
         "dmenu-mac"
         "bluej"
         "greenfoot"
@@ -59,15 +61,23 @@
       global.autoUpdate = true;
   };
 
-  launchd.user.agents = {
-    setenv = {
-      command = ''
-        /bin/launchctl setenv JAVA_HOME ${pkgs.jdk21}
-        /bin/launchctl setenv PATH_TO_FX $HOME/Downloads/jfx-sdk-21.0.8/
-      '';
-      serviceConfig.RunAtLoad = true;
+  launchd.user = {
+    agents = {
+      setenv = {
+        command = ''
+          /bin/launchctl setenv TERM xterm
+          /bin/launchctl setenv TERMINFO /Applications/Ghostty.app/Contents/Resources/terminfo
+          /bin/launchctl setenv JAVA_HOME ${pkgs.jdk21}
+          /bin/launchctl setenv PATH_TO_FX $HOME/Downloads/jfx-sdk-21.0.8/
+        '';
+        serviceConfig.RunAtLoad = true;
+      };
     };
   };
+
+  #programs.doom-emacs = {
+  # emacs = pkgs.emacs-macport;
+  #};
 
 
   system.defaults = {

@@ -17,6 +17,7 @@
   #nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim 
+    ncurses
     tmux
     curl
     wget
@@ -28,7 +29,12 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code #fira-sans fira-mono
+    nerd-fonts.terminess-ttf
+    nerd-fonts.symbols-only
+    nerd-fonts.dejavu-sans-mono
     newcomputermodern
+    lmodern
   ];
 
   #stylix = {

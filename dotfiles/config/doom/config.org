@@ -2,6 +2,36 @@
 
 Example literate config, used by ~$nix build .#doom-emacs-tangle~.
 
-#+begin_src emacs-lisp :tangle init.el
-(doom! :lang org)
+;#+begin_src emacs-lisp
+;(doom! :lang org)
+;#+end_src
+
+Setting transparency:
+#+begin_src emacs-lisp
+(set-frame-parameter (selected-frame) 'alpha-background 88)
+(add-to-list 'default-frame-alist '(alpha-background . 88))
+
+(set-frame-parameter (selected-frame) 'alpha 88)
+(add-to-list 'default-frame-alist '(alpha 88))
 #+end_src
+
+Setting alternative Splash image:
+#+begin_src emacs-lisp
+(setq fancy-splash-image (concat doom-private-dir "splash/doomEmacsGruvbox.svg"))
+#+end_src
+
+Hooks for additional modes:
+#+begin_src emacs-lisp
+(use-package! org-xournalpp
+  :config
+  (add-hook 'org-mode-hook' 'org-xournalpp-mode))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! org-krita
+  :config
+  (add-hook 'org-mode-hook' 'org-krita-mode))
+#+end_src
+
+
+

@@ -23,11 +23,22 @@
 
   # managing dotfiles through 'home.file'.
   config.home.file = {
+    #"${config.xdg.configHome}/.config" = {
+    #  source = ../../../dotfiles/config;
+    #  recursive = true;
+    #};
+  
+
     ".config/zsh/p10k.zsh".source = ../../../dotfiles/config/zsh/p10k.zsh;
     ".config/ghostty/config".source = ../../../dotfiles/config/ghostty/config;
     #".config/ghostty/shaders/cursor_smear.glsl".source = ../dotfiles/config/ghostty/shaders/cursor_smear.glsl;
     ".config/aerospace/aerospace.toml".source = ../../../dotfiles/config/aerospace/aerospace.toml;
-    #".config/zsh/p10k-colors.zsh".source = dotfiles/.config/zsh/p10k-colors.zsh;
+    ".config/doom/splash/doom-emacs-splash-template.svg".source = ../../../dotfiles/config/doom/splash/doom-emacs-splash-template.svg;
+    ".config/doom/splash/doomEmacsDoomOne.svg".source = ../../../dotfiles/config/doom/splash/doomEmacsDoomOne.svg;
+    ".config/doom/splash/doomEmacsGruvbox.svg".source = ../../../dotfiles/config/doom/splash/doomEmacsGruvbox.svg;
+    ".config/doom/splash/doomEmacsTokyoNight2.svg".source = ../../../dotfiles/config/doom/splash/doomEmacsTokyoNight2.svg;
+
+    #".config/zsh/p10k-colors.zsh".source = dotfiles/.config/zsh/p10k-colors.zsh;k
     # You can also set the file content as String:
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
@@ -61,15 +72,21 @@
 
   config.services.emacs = {
     enable = true;
-    #package = pkgs.emacs-macport;
     
   };
 
   config.programs.doom-emacs = {
     enable = true;
     doomDir = ../../../dotfiles/config/doom;
+    #doomDir = .config/doom;
+    tangleArgs = "--all config.org";
+    #tangleArgs = "--all config.org";
+    #tangleArgs = ".";
     extraPackages = epkgs: [
       #epkgs.doom
+      epkgs.quelpa
+      epkgs.quelpa-use-package
+      epkgs.org
       epkgs.org-modern
       epkgs.org-download
       epkgs.openwith
@@ -80,8 +97,28 @@
       epkgs.time-block
       epkgs.evil
       epkgs.evil-tutor
-      #inputs.org-krita
-  #    #inputs.org-xournalpp
+      (epkgs.melpaBuild {
+        pname = "org-krita";
+        version = "0.2.2";
+        packageRequires = [ epkgs.org ];
+        src = builtins.fetchTree{
+          type = "github";
+          owner = "lepisma";
+          repo = "org-krita";
+          rev = "4fff09ccf35d9b42ec3895a6a7343837a123c9a7";
+        };
+      })
+      (epkgs.melpaBuild {
+        pname = "org-xournalpp";
+        version = "0.1.1";
+        packageRequires = [ ];
+        src = builtins.fetchTree {
+          type = "gitlab";
+          owner = "vherrmann";
+          repo = "org-xournalpp";
+          rev = "c09bd8b99d36c355d632b85ecbffb3b275802381";
+        };
+      })
     ];
   };
       #
@@ -125,11 +162,29 @@
       #targets.nvf.transparentBackground = true;
     };
     polarity = "dark";
-    fonts.sizes = {
-      terminal = 15;
+    fonts = {
+      serif = {
+        package = pkgs.ubuntu-classic;
+        name = "Ubuntu Classic";
+      };
+  
+      sansSerif = {
+        package = pkgs.ubuntu-sans;
+        name = "Ubuntu Sans";
+      };
+  
+      monospace = {
+        package = pkgs.nerd-fonts.terminess-ttf;
+        name = "Terminess Nerd Font";
+      };
+  
+      sizes = {
+        applications = 14;
+        terminal = 14;
+      };
     };
-  };
-
+  };  
+  
   # colorscheming apps not targeted by stylix (p10k):
   #config.colorScheme = inputs.nix-colors.colorSchemes.gruvbox-material-dark-medium;
   #config.colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;

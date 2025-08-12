@@ -201,7 +201,7 @@
                     "homebrew/homebrew-core" = inputs.homebrew-core;
                     "homebrew/homebrew-cask" = inputs.homebrew-cask;
                   };
-                  mutableTaps = true;
+                  mutableTaps = false;
                 };
               }
             ];

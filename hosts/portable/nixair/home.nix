@@ -3,6 +3,7 @@
 {
   imports = [
     ../../common/core/home.nix
+    inputs.mac-app-util.homeManagerModules.default
   ];
 
   home.username = "david";
@@ -26,7 +27,12 @@
     #package = pkgs.jetbrains.jdk-21;
   #};
 
+  #programs.doom-emacs = {
+  #  emacs = pkgs.emacs-macport;
+  #};
+
   home.sessionVariables = {
+    #TERM = "xterm";
     #_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=lcd";
     #IDEA_JDK = lib.mkForce "${pkgs.temurin-bin-21}";
     #JAVA_HOME = lib.mkForce "${pkgs.temurin-bin-21}/Contents/Home"; not needed/wrong

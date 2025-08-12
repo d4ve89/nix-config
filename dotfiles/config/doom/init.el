@@ -42,6 +42,7 @@
 
        :lang
        emacs-lisp
+       org
        (nix +lsp)
 
        :config

@@ -142,15 +142,14 @@ automatically-unhide-macos-hidden-apps = false
     alt-shift-semicolon = 'mode service'
 
     cmd-ctrl-alt-q = 'close --quit-if-last-window'
-    #cmd-ctrl-alt-d = ['exec-and-forget open -n /System/Library/CoreServices/Spotlight.app']
-    #cmd-ctrl-alt-d = ['exec-and-forget ~/bin/combo-launcher.sh']
-    #cmd-ctrl-alt-d = ['exec-and-forget bash -c "$(cat /etc/nix-darwin/combo-launcher.sh)"']
-    #cmd-ctrl-alt-d = 'exec-and-forget /etc/nix-darwin/combo-launcher.sh'
+  
+    cmd-ctrl-alt-d = ['exec-and-forget open -a Raycast'] 
+
     #cmd-ctrl-alt-d = ['exec-and-forget open -a ~/.config/scripts/ComboLauncher.app']
 
-    cmd-ctrl-alt-d = ['''exec-and-forget osascript -e '
-         do shell script "sh ~/.config/scripts/combo-launcher.sh"'
-         ''']
+    #cmd-ctrl-alt-d = ['''exec-and-forget osascript -e '
+    #     do shell script "sh ~/.config/scripts/combo-launcher.sh"'
+    #     ''']
     #cmd-ctrl-alt-enter = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
     #cmd-ctrl-alt-enter = ['exec-and-forget open -n Ghostty']
     # alt-enter = '''exec-and-forget osascript -e '
@@ -165,7 +164,7 @@ automatically-unhide-macos-hidden-apps = false
     #cmd-ctrl-alt-enter = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
 
     cmd-ctrl-alt-enter = ['exec-and-forget open -n /Applications/Ghostty.app']
-    cmd-ctrl-alt-w = ['exec-and-forget open -n /Applications/Orion.app']
+    cmd-ctrl-alt-w = ['exec-and-forget open -n /Applications/Zen.app']
 
     cmd-ctrl-alt-t = ['exec-and-forget open -n /Applications/Ghostty.app']
     #cmd-ctrl-alt-t = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
