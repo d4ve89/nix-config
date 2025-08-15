@@ -22,9 +22,10 @@
     curl
     wget
     git
+    ripgrep
+    fd
     btop
     home-manager
-    vimPlugins.smear-cursor-nvim
   ];
 
   fonts.packages = with pkgs; [

@@ -10,6 +10,8 @@
   environment.systemPackages = [
     pkgs.aerospace
     pkgs.yabai
+    pkgs.qutebrowser
+    pkgs.xournalpp
     #pkgs.ghostty-bin broken package
     pkgs.sketchybar-app-font
     pkgs.sketchybar
@@ -23,7 +25,7 @@
     #pkgs.scenebuilder
     (pkgs.texlive.combine { 
       inherit (pkgs.texlive)  #scheme-small or #scheme-medium
-      scheme-medium mlmodern enumitem soul titlesec ulem; })
+      scheme-medium mlmodern enumitem soul titlesec ulem wrapfig capt-of hyperref preprint tabulary listings; })
     inputs.curd.packages.aarch64-darwin.default
   ];
 
@@ -32,17 +34,18 @@
       brews = [
         "mas"
         "choose-gui"
-      #"leader-key"
         "coreutils"
       ];
       casks = [
+        "krita"
+        "xppen-pentablet"
         "ghostty"
         "hammerspoon"
         "nextcloud-vfs"
         "karabiner-elements"
         "zen"
         "kindavim"
-        "raycast" #"ueli"
+        "raycast"
         "dmenu-mac"
         "bluej"
         "greenfoot"

@@ -6,8 +6,19 @@ Example literate config, used by ~$nix build .#doom-emacs-tangle~.
 ;(doom! :lang org)
 ;#+end_src
 
+#+begin_src emacs-lisp :tangle config.el
+(setq org-latex-src-block-backend 'listings))
+#+end_src
+
+tabsize 4:
+#+begin_src emacs-lisp :tangle config.el
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(setq indent-line-function 'insert-tab)
+#+end_src
+
 Setting transparency:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (set-frame-parameter (selected-frame) 'alpha-background 88)
 (add-to-list 'default-frame-alist '(alpha-background . 88))
 
@@ -16,22 +27,43 @@ Setting transparency:
 #+end_src
 
 Setting alternative Splash image:
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (setq fancy-splash-image (concat doom-private-dir "splash/doomEmacsGruvbox.svg"))
 #+end_src
 
-Hooks for additional modes:
-#+begin_src emacs-lisp
+Hooks and settings for additional modes:
+
+#+begin_src emacs-lisp :tangle config.el
+(use-package! org-modern
+  :config
+  (add-hook 'org-mode-hook 'org-modern-mode))
+  (add-hook 'org-mode-hook 'org-indent-mode))
+#+end_src
+
+#+begin_src emacs-lisp :tangle config.el
 (use-package! org-xournalpp
   :config
   (add-hook 'org-mode-hook' 'org-xournalpp-mode))
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle config.el
 (use-package! org-krita
   :config
   (add-hook 'org-mode-hook' 'org-krita-mode))
 #+end_src
 
+#+begin_src emacs-lisp :tangle config.el
+(use-package! org-tree-slide
+ :custom
+ (org-image-actual-width nil))
+#+end_src
 
-
+Latex settings:
+#+begin_src emacs-lisp :tangle config.el
+(after! ox-latex
+  (setq org-latex-compiler 'xelatex)
+  (setq org-latex-pdf-process
+        '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+          "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+  (setq org-latex-src-block-backend 'listings))  ;; Or 'minted if preferred
+#+end_src

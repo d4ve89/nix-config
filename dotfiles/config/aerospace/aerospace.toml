@@ -42,6 +42,9 @@ automatically-unhide-macos-hidden-apps = false
 [key-mapping]
     preset = 'qwerty'
 
+#[key-mapping.key-notation-to-key-code]
+#    meta = 'alt-cmd'
+
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
 # - Constant:     gaps.outer.top = 8
@@ -112,26 +115,26 @@ automatically-unhide-macos-hidden-apps = false
     alt-equal = 'resize smart +50'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    cmd-ctrl-alt-1 = 'workspace 1'
-    cmd-ctrl-alt-2 = 'workspace 2'
-    cmd-ctrl-alt-3 = 'workspace 3'
-    cmd-ctrl-alt-4 = 'workspace 4'
-    cmd-ctrl-alt-5 = 'workspace 5'
-    cmd-ctrl-alt-6 = 'workspace 6'
-    cmd-ctrl-alt-7 = 'workspace 7'
-    cmd-ctrl-alt-8 = 'workspace 8'
-    cmd-ctrl-alt-9 = 'workspace 9'
+    alt-cmd-1 = 'workspace 1'
+    alt-cmd-2 = 'workspace 2'
+    alt-cmd-3 = 'workspace 3'
+    alt-cmd-4 = 'workspace 4'
+    alt-cmd-5 = 'workspace 5'
+    alt-cmd-6 = 'workspace 6'
+    alt-cmd-7 = 'workspace 7'
+    alt-cmd-8 = 'workspace 8'
+    alt-cmd-9 = 'workspace 9'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    cmd-ctrl-alt-shift-1 = 'move-node-to-workspace 1'
-    cmd-ctrl-alt-shift-2 = 'move-node-to-workspace 2'
-    cmd-ctrl-alt-shift-3 = 'move-node-to-workspace 3'
-    cmd-ctrl-alt-shift-4 = 'move-node-to-workspace 4'
-    cmd-ctrl-alt-shift-5 = 'move-node-to-workspace 5'
-    cmd-ctrl-alt-shift-6 = 'move-node-to-workspace 6'
-    cmd-ctrl-alt-shift-7 = 'move-node-to-workspace 7'
-    cmd-ctrl-alt-shift-8 = 'move-node-to-workspace 8'
-    cmd-ctrl-alt-shift-9 = 'move-node-to-workspace 9'
+    alt-cmd-shift-1 = 'move-node-to-workspace 1'
+    alt-cmd-shift-2 = 'move-node-to-workspace 2'
+    alt-cmd-shift-3 = 'move-node-to-workspace 3'
+    alt-cmd-shift-4 = 'move-node-to-workspace 4'
+    alt-cmd-shift-5 = 'move-node-to-workspace 5'
+    alt-cmd-shift-6 = 'move-node-to-workspace 6'
+    alt-cmd-shift-7 = 'move-node-to-workspace 7'
+    alt-cmd-shift-8 = 'move-node-to-workspace 8'
+    alt-cmd-shift-9 = 'move-node-to-workspace 9'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
@@ -141,9 +144,9 @@ automatically-unhide-macos-hidden-apps = false
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
 
-    cmd-ctrl-alt-q = 'close --quit-if-last-window'
+    alt-cmd-q = 'close --quit-if-last-window'
   
-    cmd-ctrl-alt-d = ['exec-and-forget open -a Raycast'] 
+    alt-cmd-d = ['exec-and-forget open -a Raycast'] 
 
     #cmd-ctrl-alt-d = ['exec-and-forget open -a ~/.config/scripts/ComboLauncher.app']
 
@@ -163,19 +166,19 @@ automatically-unhide-macos-hidden-apps = false
 #      '''
     #cmd-ctrl-alt-enter = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
 
-    cmd-ctrl-alt-enter = ['exec-and-forget open -n /Applications/Ghostty.app']
-    cmd-ctrl-alt-w = ['exec-and-forget open -n /Applications/Zen.app']
+    alt-cmd-enter = ['exec-and-forget open -n /Applications/Ghostty.app']
+    alt-cmd-w = ['exec-and-forget open -n /Applications/Zen.app']
 
-    cmd-ctrl-alt-t = ['exec-and-forget open -n /Applications/Ghostty.app']
+    alt-cmd-t = ['exec-and-forget open -n /Applications/Ghostty.app']
     #cmd-ctrl-alt-t = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
-    cmd-ctrl-alt-c = ['exec-and-forget open -a Calendar']
-    cmd-ctrl-alt-m = ['exec-and-forget open -a Mail']
-    cmd-ctrl-alt-f = 'fullscreen'
+    alt-cmd-c = ['exec-and-forget open -a Calendar']
+    alt-cmd-m = ['exec-and-forget open -a Mail']
+    alt-cmd-f = 'fullscreen'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-    cmd-ctrl-alt-shift-q = ['reload-config', 'mode main']
+    alt-cmd-shift-q = ['reload-config', 'mode main']
     r = ['flatten-workspace-tree', 'mode main'] # reset layout
     f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
     backspace = ['close-all-windows-but-current', 'mode main']
@@ -191,3 +194,8 @@ automatically-unhide-macos-hidden-apps = false
     down = 'volume down'
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
+
+# Fix Orion
+[[on-window-detected]]
+    if.window-title-regex-substring = "Orion Preview"
+      run = []

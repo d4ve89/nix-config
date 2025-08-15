@@ -91,12 +91,18 @@
       epkgs.org-download
       epkgs.openwith
       epkgs.ob-mermaid
+      epkgs.org-drawio
+      epkgs.org-roam
       epkgs.org-roam-ui
+      epkgs.magit
+      #epkgs.md-roam
       epkgs.org-transclusion
       epkgs.org-super-agenda
       epkgs.time-block
+      epkgs.beacon
       epkgs.evil
       epkgs.evil-tutor
+      epkgs.org-tree-slide
       (epkgs.melpaBuild {
         pname = "org-krita";
         version = "0.2.2";

@@ -41,12 +41,32 @@
 
         };
 
+        notes = {
+          orgmode.enable = true;
+          orgmode.treesitter.enable = false;
+          #orgmode = { #alternative: neorg
+          #enable = false;
+            #setupOpts = {
+              #org_agenda_files = [
+              #  "~/Documents/org/*"
+              #];
+              #org_default_notes_file = 
+              #  "~/Documents/org/refile.org";
+              #};
+          #treesitter.enable = true;
+            #treesitter.orgPackage = 
+            #pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+          #};
+        };
+
         lineNumberMode = "number";
 
         startPlugins = [
           "render-markdown-nvim"
           "vim-markdown"
-          "nvim-treesitter"
+          #"nvim-treesitter"
+          #pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+          #pkgs.vimPlugins.org-roam-nvim
           pkgs.vimPlugins.smear-cursor-nvim
         ];
 
@@ -54,17 +74,13 @@
           smear_cursor = {
             package = pkgs.vimPlugins.smear-cursor-nvim;
             setup = ''require("smear_cursor").setup({})'';
-            #setup = ''
-              #require("smear_cursor").setup({
-                #cursor_color = "#ff8800",
-                #stiffness = 0.3,
-                #trailing_stiffness = 0.1,
-                #trailing_exponent = 5,
-                #hide_target_hack - true,
-                #gamma = 1,
-              #})
-            #'';
           };
+          #org-roam = {
+          #package = pkgs.vimPlugins.org-roam-nvim;
+          #setup = ''require("org-roam").setup({
+          #directory = "~/orgfiles",
+          #})'';
+          #};
         };
 
         options = {
@@ -78,6 +94,10 @@
     
         lsp.enable = true;
 
+        #treesitter.grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        #  org
+        #];
+
         languages = {
           enableTreesitter = true;
           nix.enable = true;
@@ -86,6 +106,7 @@
           css.enable = true;
           python.enable = true;
           markdown.enable = true;
+          #org.enable = true;
           sql.enable = true;
           ts.enable = true;
           lua.enable = true;
