@@ -42,8 +42,8 @@
         };
 
         notes = {
-          orgmode.enable = true;
-          orgmode.treesitter.enable = false;
+          #orgmode.enable = true;
+          #orgmode.treesitter.enable = lib.mkForce false;
           #orgmode = { #alternative: neorg
           #enable = false;
             #setupOpts = {
@@ -66,6 +66,7 @@
           "vim-markdown"
           #"nvim-treesitter"
           #pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+          pkgs.vimPlugins.orgmode
           #pkgs.vimPlugins.org-roam-nvim
           pkgs.vimPlugins.smear-cursor-nvim
         ];
@@ -75,11 +76,25 @@
             package = pkgs.vimPlugins.smear-cursor-nvim;
             setup = ''require("smear_cursor").setup({})'';
           };
+          orgmode = {
+            package = pkgs.vimPlugins.orgmode;
+            setup = ''require('orgmode').setup({
+      org_agenda_files = '~/Documents/orgfiles/**/*',
+      org_default_notes_file = '~/Documents/orgfiles/refile.org',
+    })
+
+    -- NOTE: If you are using nvim-treesitter with ~ensure_installed = "all"~ option
+    -- add ~org~ to ignore_install
+    -- require('nvim-treesitter.configs').setup({
+    --   ensure_installed = 'all',
+    --   ignore_install = { 'org' },
+    -- })'';
+          };
           #org-roam = {
           #package = pkgs.vimPlugins.org-roam-nvim;
           #setup = ''require("org-roam").setup({
-          #directory = "~/orgfiles",
-          #})'';
+          #        directory = "~/Documents/orgfiles",
+          #        })'';
           #};
         };
 
