@@ -67,7 +67,7 @@
           #"nvim-treesitter"
           #pkgs.vimPlugins.nvim-treesitter.withAllGrammars
           pkgs.vimPlugins.orgmode
-          #pkgs.vimPlugins.org-roam-nvim
+          pkgs.vimPlugins.org-roam-nvim
           pkgs.vimPlugins.smear-cursor-nvim
         ];
 
@@ -90,12 +90,12 @@
     --   ignore_install = { 'org' },
     -- })'';
           };
-          #org-roam = {
-          #package = pkgs.vimPlugins.org-roam-nvim;
-          #setup = ''require("org-roam").setup({
-          #        directory = "~/Documents/orgfiles",
-          #        })'';
-          #};
+          org-roam = {
+          package = pkgs.vimPlugins.org-roam-nvim;
+          after = ["orgmode"];
+          setup = ''require("org-roam").setup({
+                  directory = "~/Documents/orgfiles"})'';
+          };
         };
 
         options = {
