@@ -80,7 +80,6 @@
     doomDir = ../../../dotfiles/config/doom;
     #doomDir = .config/doom;
     tangleArgs = "--all config.org";
-    #tangleArgs = "--all config.org";
     #tangleArgs = ".";
     extraPackages = epkgs: [
       #epkgs.doom
@@ -88,6 +87,7 @@
       epkgs.quelpa-use-package
       epkgs.org
       epkgs.org-modern
+      #epkgs.doom-themes
       epkgs.org-download
       epkgs.openwith
       epkgs.ob-mermaid
@@ -99,6 +99,13 @@
       epkgs.org-transclusion
       epkgs.org-super-agenda
       epkgs.time-block
+      epkgs.treemacs
+      epkgs.treemacs-magit
+      epkgs.treemacs-evil
+      epkgs.treemacs-projectile
+      epkgs.treemacs-persp
+      epkgs.treemacs-tab-bar
+      epkgs.lsp-treemacs
       epkgs.beacon
       epkgs.evil
       epkgs.evil-tutor
@@ -152,7 +159,8 @@
   config.stylix = {
     enable = true;
     autoEnable = true;
-    #image = ./wallpaper.png
+    image = "~/Pictures/wallpapers/onedark/";
+    #image = ~/Pictures/wallpapers/gruvbox/
     #image = pkgs.fetchurl { url= ; hash= ;};
 
     base16Scheme = "${pkgs.base16-schemes}/share/themes/onedark.yaml";
@@ -163,9 +171,11 @@
     #base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
     # if stylix.base16Scheme is undeclared, it generates a colorscheme based on the wallpaper.
     opacity.terminal = 0.8;
-    targets.nvf = {
-      enable = false;
+    opacity.applications = 0.8;
+    targets = {
+      nvf.enable = false;
       #targets.nvf.transparentBackground = true;
+      emacs.enable = true;
     };
     polarity = "dark";
     fonts = {

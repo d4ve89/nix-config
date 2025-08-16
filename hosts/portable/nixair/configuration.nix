@@ -41,6 +41,7 @@
         "xppen-pentablet"
         "ghostty"
         "hammerspoon"
+        "desktoppr"
         "nextcloud-vfs"
         "karabiner-elements"
         "zen"
@@ -111,6 +112,11 @@
 	    KeyRepeat = 2;
     };
   };
+
+  system.activationScripts.switchWallpaper.text = ''
+         echo >&2 "Switching wallpapers..."
+         /usr/local/bin/desktoppr 0 $(find /Users/david/Pictures/wallpapers/onedark -type f | shuf -n 1)
+     '';
 
 
 

@@ -27,9 +27,9 @@
     #package = pkgs.jetbrains.jdk-21;
   #};
 
-  #programs.doom-emacs = {
-  #  emacs = pkgs.emacs-macport;
-  #};
+  programs.doom-emacs = {
+    emacs = pkgs.emacs-macport;
+  };
 
   home.sessionVariables = {
     #TERM = "xterm";
