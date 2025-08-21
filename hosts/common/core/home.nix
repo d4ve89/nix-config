@@ -10,44 +10,35 @@
     ../../../modules/home
   ];
 
+
   # user specific packages on all hosts:
+  #
+ #
+   #
+   #
   home.packages = [
     (pkgs.writeShellApplication {
       name = "toggle-theme";
-      runtimeInputs = with pkgs; [ home-manager coreutils fzf ];
+      runtimeInputs = with pkgs; [ home-manager coreutils findutils gnugrep fzf ];
       text = ''
         #!/bin/sh
+        set -eu
 
-        # Get the path to the current home-manager generation
-        gen_path=$(home-manager generations | head -1 | grep -o '/nix/store[^ ]*')
-        spec_dir="$gen_path/specialisation"
+        spec_dir=""
+        for p in $(home-manager generations | grep -o '/nix/store[^ ]*'); do
+          [ -d "$p/specialisation" ] && { spec_dir="$p/specialisation"; break; }
+        done
 
-        if [ ! -d "$spec_dir" ]; then
-          echo "No specialisations found in: $spec_dir"
-          exit 1
-        fi
+        [ -z "$spec_dir" ] && { echo "No specialisation found."; exit 1; }
 
-        specs=$(find "$spec_dir" -mindepth 1 -maxdepth 1 -type f -exec basename {} \;)
+        spec=$(find -L "$spec_dir" -mindepth 1 -maxdepth 1 -printf '%f\n' | fzf --prompt="Select: ") || exit 0
+        [ -z "$spec" ] && exit 0
 
-        if [ -z "$specs" ]; then
-          echo "No specialisations found."
-          exit 1
-        fi
+        "$spec_dir/$spec/activate"
 
-        selection=$(echo "$specs" | fzf --prompt="Select specialisation: ")
-
-        if [ -z "$selection" ]; then
-          echo "No selection made."
-          exit 0
-        fi
-
-        "$spec_dir/$selection"
-
-        # Optionally store a timestamp
         mkdir -p "$HOME/.cache"
         date +%s > "$HOME/.cache/.theme_reload_timestamp"
-
-        echo "Activated specialisation: $selection"
+        echo "Activated: $spec"
       '';
     })
   ];
