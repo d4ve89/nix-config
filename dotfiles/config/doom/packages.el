@@ -2,7 +2,7 @@
 ;;
 ;; Licensed under the Apache License, Version 2.0 (the "License");
 ;; you may not use this file except in compliance with the License.
-;; You may obtain a copy of the License at
+;; You may obtain a copy of the Licen
 ;;
 ;;     http://www.apache.org/licenses/LICENSE-2.0
 ;;
@@ -14,7 +14,61 @@
 
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
+;;;
 
-(package! evil-escape :disable t)
+;; themes:
+(package! base16-theme)
+(package! catppuccin-theme)
+(package! doom-themes)
 
+;; org extensions:
+;;
+(package! org)
+(package! ob-mermaid)
+(package! org-download)
+(package! org-drawio)
+(package! org-modern)
+(package! org-present)
+(package! org-roam)
+(package! org-roam-ui)
+(package! org-super-agenda)
+(package! org-transclusion)
+(package! org-tree-slide)
+(package! org-xopp
+  :recipe (:type git
+           :repo "https://github.com/mahmoodsh36/org-xopp"
+           :files (:defaults "*.sh"))
+  :pin "cef73dd97d39a70dde8fbe5b5eeab3c42fed8f97")
+ ;; :config
+ ;; (org-xopp-setup))
+ ;;
+(package! org-xournalpp
+  :recipe (:type git
+           :repo "https://codeberg.org/Hermanhel/org-xournalpp.git"
+           :files ("resources" "*.el"))
+  :pin "3b1259240fe1b693fa49652270149762123358d6")
+
+(package! org-yt
+  :recipe (:type git
+           :repo "https://github.com/TobiasZawada/org-yt"
+           :files ("*.el"))
+  :pin "56166f48e04d83668f70ed84706b7a4d8b1e5438")
+
+
+;; other
+(package! beacon)
 (package! dotenv-mode)
+(package! evil-escape :disable t)
+(package! evil-tutor)
+(package! magit)
+(package! olivetti)
+(package! openwith)
+(package! time-block)
+(package! treemacs)
+(package! treemacs-magit)
+(package! treemacs-evil)
+(package! treemacs-projectile)
+(package! treemacs-persp)
+(package! treemacs-tab-bar)
+(package! lsp-treemacs)
+(package! visual-fill-column)

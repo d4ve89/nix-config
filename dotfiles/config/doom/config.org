@@ -62,17 +62,17 @@ These need to be loaded first before the GUI starts
   :config
   (add-hook 'org-mode-hook #'org-krita-mode))
 
-(after! org-krita
-  (add-to-list 'exec-path "/Applications/Krita.app/Contents/MacOS")
+;;(after! org-krita
+;;  (add-to-list 'exec-path "/Applications/Krita.app/Contents/MacOS")
  
-  (defun my/org-krita-make-new-image (output-kra-path &optional width height)
-    "Create a new image based on a template at OUTPUT-KRA-PATH."
-    (let ((template (org-krita-resource "~/.config/krita/template.kra")))
+;;  (defun my/org-krita-make-new-image (output-kra-path &optional width height)
+;;    "Create a new image based on a template at OUTPUT-KRA-PATH."
+;;    (let ((template (org-krita-resource "~/.config/krita/template.kra")))
       ;; TODO: Change image width and height based on provided argument
-      (f-copy template output-kra-path)
-      (set-file-modes output-kra-path #o644)))) ;; change permissions
+ ;;     (f-copy template output-kra-path)
+ ;;     (set-file-modes output-kra-path #o644)))) ;; change permissions
 
-(advice-add 'org-krita-make-new-image :override #'my/org-krita-make-new-image)
+;;(advice-add 'org-krita-make-new-image :override ;;#'my/org-krita-make-new-image)
 
 (with-eval-after-load 'org-xournalpp
   (setq org-xournalpp-template-getter

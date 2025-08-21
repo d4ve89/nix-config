@@ -202,42 +202,18 @@
           value = home-manager.lib.homeManagerConfiguration {
             pkgs = pkgsFor.${arch};
             extraSpecialArgs = {
-              inherit inputs outputs lib role host arch;
+              inherit inputs outputs role host arch;
               isDarwin = lib.hasSuffix "-darwin" arch;
             };
             modules = [
               ./hosts/common/core/home.nix
               ./hosts/${role}/${host}/home.nix
-                ./modules/home/theme/theme-specialisation.nix
-                # Add any other HM-specific modules here
+              ./modules/home/theme/theme-specialisation.nix
+              # Add any other HM-specific modules here
             ];
           };
         }) hosts
       );
-
-      #standalone homemanager:
-      #homeConfigurations = { };A
-      #
-      #
-      #homeConfigurations = lib.listToAttrs (
-      #  map ({ role, host, arch }: {
-      #    name = host;
-      #    value = home-manager.lib.homeManagerConfiguration {
-      #      pkgs = pkgsFor.${arch};
-      #      modules = [
-      #        ./hosts/common/core/home.nix
-      #        ./hosts/${role}/${host}/home.nix
-      #        ./modules/home/theme/theme-specialisation.nix
-      #      ];
-       #     extraSpecialArgs = {
-       #       inherit inputs outputs lib role host arch;
-       #     };
-       #   };
-       # }) hosts
-      #);
-
-
-
     };
 
 }
