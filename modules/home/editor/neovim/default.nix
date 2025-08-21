@@ -30,15 +30,37 @@
         theme = {
           enable = true;
           # available options: ayu,
-          name = lib.mkDefault "ayu";
-          style = lib.mkDefault "mirage";
+          #name = lib.mkDefault "ayu";
+          #style = lib.mkDefault "mirage";
           #name = "base16";
           #name = lib.mkDefault "gruvbox";
           #style = lib.mkDefault "dark";
           #name = "catppuccin";
           #style = "macchiato";
           #name = "tokyonight"
-          #style = "night";
+          #style = "night";A
+          name = lib.mkOverride 800 "base16";
+          #base16-colors = config.lib.stylix.colors;
+          #base16-colors = lib.mkDefault config.lib.stylix.colors;
+          base16-colors = lib.mkDefault {
+            base00 = config.lib.stylix.colors.base00;
+            base01 = config.lib.stylix.colors.base01;
+            base02 = config.lib.stylix.colors.base02;
+            base03 = config.lib.stylix.colors.base03;
+            base04 = config.lib.stylix.colors.base04;
+            base05 = config.lib.stylix.colors.base05;
+            base06 = config.lib.stylix.colors.base06;
+            base07 = config.lib.stylix.colors.base07;
+            base08 = config.lib.stylix.colors.base08;
+            base09 = config.lib.stylix.colors.base09;
+            base0A = config.lib.stylix.colors.base0A;
+            base0B = config.lib.stylix.colors.base0B;
+            base0C = config.lib.stylix.colors.base0C;
+            base0D = config.lib.stylix.colors.base0D;
+            base0E = config.lib.stylix.colors.base0E;
+            base0F = config.lib.stylix.colors.base0F;
+          };
+
           #name = "base16";
           #base16-colors = config.colorScheme.palette;
           transparent = lib.mkForce true;
@@ -74,8 +96,8 @@
           "vim-markdown"
           #"nvim-treesitter"
           #pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-          lib.mkIf config.editor_neovim.orgmode pkgs.vimPlugins.orgmode
-          lib.mkIf config.editor_neovim.orgmode pkgs.vimPlugins.org-roam-nvim
+          pkgs.vimPlugins.orgmode
+          pkgs.vimPlugins.org-roam-nvim
           pkgs.vimPlugins.smear-cursor-nvim
         ];
 
@@ -84,7 +106,7 @@
             package = pkgs.vimPlugins.smear-cursor-nvim;
             setup = ''require("smear_cursor").setup({})'';
           };
-          orgmode = lib.mkIf config.editor_neovom.orgmode {
+          orgmode = lib.mkIf config.editor_neovim.orgmode {
             package = pkgs.vimPlugins.orgmode;
             setup = ''require('orgmode').setup({
       org_agenda_files = '~/Documents/orgfiles/**/*',

@@ -5,7 +5,7 @@
     source = config.lib.file.mkOutOfStoreSymlink ../../../../dotfiles/sketchybar;
   };
 
-  config.programs.sketchybar = lib.mkIf config.wm_sketchybar_enable {
+  config.programs.sketchybar = lib.mkIf config.wm_sketchybar.enable {
     enable = true;
     package = pkgs.sketchybar;
     config = {

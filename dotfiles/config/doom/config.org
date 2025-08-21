@@ -27,7 +27,7 @@ These need to be loaded first before the GUI starts
 ;; (load-theme 'base16-stylix t)
 ;;(load-theme 'doom-gruvbox t)
 ;;(add load path! "~/.config/doom/custom_theme.el")
-(add-to-list 'load path "~/.config/doom/theme/custom_theme.el")
+(add-to-list 'load path "~/.config/doom/theme/theme.el")
 ;;(load-theme 'doom-ayu-mirage t)
 (setq doom-font (font-spec :family "Terminess Nerd Font" :size 14))
 #+end_src

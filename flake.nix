@@ -170,7 +170,13 @@
               #    useGlobalPkgs = true;
               #    useUserPackages = true;
               #    extraSpecialArgs = { inherit inputs; };
-              #    users.david = import ./hosts/${role}/${host}/home.nix;
+              #      users.david = {
+              #      imports = [
+              #        ./hosts/common/core/home.nix
+              #        ./hosts/${role}/${host}/home.nix
+              #        ./modules/home/theme/theme-specialisation.nix
+              #      ];
+              #      };
               #  };
               #}
               inputs.nix-homebrew.darwinModules.nix-homebrew {
@@ -190,25 +196,45 @@
         }) darwinHosts
       );
 
-      #standalone homemanager:
-      #homeConfigurations = { };A
-      #
-      #
       homeConfigurations = lib.listToAttrs (
         map ({ role, host, arch }: {
           name = host;
           value = home-manager.lib.homeManagerConfiguration {
             pkgs = pkgsFor.${arch};
-            modules = [
-              ./hosts/${role}/${host}/home.nix
-                ./modules/home/theme
-            ];
             extraSpecialArgs = {
               inherit inputs outputs lib role host arch;
+              isDarwin = lib.hasSuffix "-darwin" arch;
             };
+            modules = [
+              ./hosts/common/core/home.nix
+              ./hosts/${role}/${host}/home.nix
+                ./modules/home/theme/theme-specialisation.nix
+                # Add any other HM-specific modules here
+            ];
           };
         }) hosts
       );
+
+      #standalone homemanager:
+      #homeConfigurations = { };A
+      #
+      #
+      #homeConfigurations = lib.listToAttrs (
+      #  map ({ role, host, arch }: {
+      #    name = host;
+      #    value = home-manager.lib.homeManagerConfiguration {
+      #      pkgs = pkgsFor.${arch};
+      #      modules = [
+      #        ./hosts/common/core/home.nix
+      #        ./hosts/${role}/${host}/home.nix
+      #        ./modules/home/theme/theme-specialisation.nix
+      #      ];
+       #     extraSpecialArgs = {
+       #       inherit inputs outputs lib role host arch;
+       #     };
+       #   };
+       # }) hosts
+      #);
 
 
 

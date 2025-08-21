@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs,... }:
 {
-  config.home.username = "david";
-  config.home.homeDirectory = lib.mkDefault "/home/david";
+  home.username = "david";
+  home.homeDirectory = lib.mkDefault "/home/david";
 
   imports = [
     inputs.nvf.homeManagerModules.default
@@ -18,18 +18,18 @@
   ];
 
   # user specific packages on all hosts:
-  config.home.packages = [
-    pkgs.zsh-powerlevel10k
-  ];
+  #home.packages = [
+  #  pkgs.zsh-powerlevel10k
+  #];
 
   # managing dotfiles through 'home.file'.
-  config.home.file = {
+  home.file = {
     #"${config.xdg.configHome}/.config" = {
     #  source = ../../../dotfiles/config;
     #  recursive = true;
     #};
     ".config/doom/org-latex-export-dj.org".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/doom/org-latex-export-dj.org;
-    ".config/ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/ghostty/config;
+    #".config/ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/ghostty/config;
     #".config/ghostty/shaders/cursor_smear.glsl".source = ../dotfiles/config/ghostty/shaders/cursor_smear.glsl;
     #".config/jankyborders/jankyborders.toml".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/jankyborders/jankyborders
 
@@ -50,31 +50,31 @@
   #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
   #  /etc/profiles/per-user/david/etc/profile.d/hm-session-vars.sh
   #
-  config.home.sessionVariables = {
+  home.sessionVariables = {
     EDITOR = "nvim";
   };
 
-  config.shell_zsh = {
+  shell_zsh = {
     enable = true;
     p10k = true;
   };
 
-  config.editor_neovim = {
+  editor_neovim = {
     enable = true;
     orgmode = true;
     animCursor = true;
   };
 
-  config.editor_doom-emacs.enable = true;
+  editor_doom-emacs.enable = true;
 
-  config.services.emacs = {
+  services.emacs = {
     enable = true;
   };
 
-  config.themes.opacity.enable = true;
+  #themes.opacity.enable = true;
 
 
-  config.programs.git = {
+  programs.git = {
     enable = true;
     #userName = "d.djaja";
     userName = "d4ve89";
@@ -109,12 +109,12 @@
   #config.programs.zellij.enableZshIntegration = true;
 
   # Let Home Manager install and manage itself.
-  config.programs.home-manager.enable = true;
+  programs.home-manager.enable = true;
 
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  config.home.stateVersion = "25.05"; # Please read the comment before changing.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
 
 
 }

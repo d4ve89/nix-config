@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../common/core/home.nix
+    #../../common/core/home.nix
     inputs.mac-app-util.homeManagerModules.default
   ];
 

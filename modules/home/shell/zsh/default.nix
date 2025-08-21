@@ -6,13 +6,13 @@
     shell_zsh.p10k = lib.mkEnableOption "enables prompt styling";
   };
 
-  config.home.packages = [
-    lib.mkIf config.shell_zsh.p10k pkgs.zsh-powerlevel10k
+  config.home.packages = lib.mkIf config.shell_zsh.p10k [
+    pkgs.zsh-powerlevel10k
   ];
 
   config.home.file = {
-    ".config/zsh/p10k.zsh" = lib.mkIf config.shell_zsh.p10k {
-      source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/zsh/p10k.zsh;
+    "${config.xdg.configHome}/zsh/p10k.zsh" = lib.mkIf config.shell_zsh.p10k {
+      source = config.lib.file.mkOutOfStoreSymlink ../../../../dotfiles/config/zsh/p10k.zsh;
     };
   };
 
@@ -32,13 +32,13 @@
             source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
           fi
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-          source ~/.config/zsh/p10k.zsh
+          source ${config.xdg.configHome}/zsh/p10k.zsh
         '';
         zshConfigLast = lib.mkOrder 1500 ''
           PATH=/etc/profiles/per-user/david/bin:$PATH
-          source ~/.config/zsh/p10k-stylix.zsh
-          source ~/.config/zsh/syn_highlight-stylix.zsh
-          #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#${config.lib.stylix.base03}"
+          source ${config.xdg.configHome}/zsh/p10k-stylix.zsh
+          source ${config.xdg.configHome}/zsh/syn_highlight-stylix.zsh
+          #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#${config.lib.stylix.colors.base03}"
           bindkey '^I^I' autosuggest-accept
         '';
       in 

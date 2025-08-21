@@ -7,7 +7,7 @@
  
   config.programs.doom-emacs = lib.mkIf config.editor_doom-emacs.enable {
     enable = true;
-    doomDir = ../../../dotfiles/config/doom;
+    doomDir = ../../../../dotfiles/config/doom;
     #doomDir = .config/doom;
     tangleArgs = "--all config.org"; #alt option: "."
     extraPackages = epkgs: [
@@ -15,7 +15,7 @@
       epkgs.quelpa
       epkgs.quelpa-use-package
       epkgs.org
-      epkgs.org-faces
+      #epkgs.org-faces
       epkgs.org-modern
       epkgs.olivetti
       epkgs.doom-themes
