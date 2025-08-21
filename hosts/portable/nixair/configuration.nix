@@ -1,7 +1,5 @@
 { config, pkgs, lib, inputs, outputs, ... }:
 {
-  #imports = [ ../../default-config.nix ]; not needed bc flake loads both
-
   # The platform the configuration will be used on.
   #nixpkgs.hostPlatform = "aarch64-darwin";
   networking.hostName = "nixair";
@@ -11,8 +9,15 @@
     pkgs.aerospace
     pkgs.yabai
     pkgs.qutebrowser
-    pkgs.xournalpp
-    #pkgs.ghostty-bin broken package
+    pkgs.gzip
+    pkgs.unzip
+    pkgs.pngpaste
+    pkgs.pdf2svg
+    #pkgs.mermaid-cli -> homebrew
+    pkgs.brave # chromium-browser for mermaid/puppeteer
+    pkgs.imagemagick
+    #pkgs.xournalpp no darwin build -> homebrew
+    #pkgs.ghostty-bin broken package -> homebrew
     pkgs.sketchybar-app-font
     pkgs.sketchybar
     pkgs.jankyborders
@@ -35,10 +40,13 @@
         "mas"
         "choose-gui"
         "coreutils"
+        "mermaid-cli"
       ];
       casks = [
+        "drawio"
         "krita"
-        "xppen-pentablet"
+        "xournal++"
+        #"xppen-pentablet" # wrong version
         "ghostty"
         "hammerspoon"
         "desktoppr"
@@ -115,7 +123,7 @@
 
   system.activationScripts.switchWallpaper.text = ''
          echo >&2 "Switching wallpapers..."
-         /usr/local/bin/desktoppr 0 $(find /Users/david/Pictures/wallpapers/onedark -type f | shuf -n 1)
+         /usr/local/bin/desktoppr 0 $(find /Users/david/Pictures/wallpapers/gruvbox -type f | shuf -n 1)
      '';
 
 

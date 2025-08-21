@@ -4,9 +4,11 @@
 <svg
    id="svg5"
    version="1.1"
-   viewBox="0 0 135.46666 135.46667"
-   height="512"
-   width="512"
+   viewBox="20.319999 20.319999 94.826662 94.826669"
+   height="358.4"
+   width="358.4"
+   preserveAspectRatio="xMidYMid meet"
+   style="background: transparent;"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
@@ -123,24 +125,13 @@
     <g
        id="g173629"
        transform="matrix(2.1585019,0,0,2.1585019,-434.03785,247.8148)">
-      <circle
-         style="fill:#1c1f24;fill-opacity:1;stroke-width:1.02635;filter:url(#filter203318)"
-         id="circle34102"
-         cx="406.03421"
-         cy="-182.52992"
-         r="29.772095" />
-      <circle
-         style="fill:#1d2021;fill-opacity:1;stroke-width:1.02631"
-         id="circle34098"
-         cx="406.03421"
-         cy="-182.52991"
-         r="29.770985" />
+
       <circle
          style="mix-blend-mode:normal;fill:#504945;fill-opacity:1;stroke-width:0.217033;filter:url(#filter44958)"
          id="circle34100"
          cx="69.37648"
          cy="72.174637"
-         r="6.2956543"
+         r="0.2956543"
          transform="matrix(2.4903782,0,0,2.4903782,233.26055,-362.27205)" />
       <g
          id="g173594">

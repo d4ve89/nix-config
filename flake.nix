@@ -49,7 +49,7 @@
     # sources to theme programs and shells:
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-    nix-colors.url = "github:misterio77/nix-colors";
+    #nix-colors.url = "github:misterio77/nix-colors";
     #nix-colors.inputs.nixpkgs.follows = "nixpkgs";
     mac-app-util.url = "github:hraban/mac-app-util";
     mac-app-util.inputs.nixpkgs.follows = "nixpkgs";
@@ -60,14 +60,10 @@
 
   };
 
-  outputs = { self, nixpkgs, nix-darwin, systems, ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, home-manager, systems, ... }@inputs:
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // inputs.home-manager.lib;
-
-      #inputs.idea-c-pin2024 = final: prev: {
-      #  jetbrains.idea-community-bin = inputs.idea-c-pin2024.legacyPackages.${prev.system}.jetbrains.idea-community-bin;
-      #};
 
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
 
@@ -76,6 +72,7 @@
           import nixpkgs {
             inherit system;
             config.allowUnfree = true;
+            config.allowUnfreePredicate = _: true;
             overlays = [
               (self: super: import ./packages { pkgs = super; })
             #inputs.idea-c-pin2024
@@ -109,7 +106,7 @@
     in {
       inherit lib;
       nixosModules = import ./modules/system;
-      homeManagerModules = import ./modules/user;
+      homeManagerModules = import ./modules/home;
       overlays = import ./overlays {inherit inputs outputs;};
       packages = forEachSystem (pkgs: import ./packages {inherit pkgs;});
         
@@ -134,22 +131,6 @@
       #devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
       #formatter = forEachSystem (pkgs: pkgs.nixfmt-rfc-style);
       #formatter = lib.genAttrs (import systems) (system: pkgsFor.${system}.nixfmt-rfc-style);
-
-      # custom packages:
-      #packages = forAllSystems (
-      #  system: import ./packages nixpkgs.legacyPackages.${system}
-      #);
-      # modifications on official packages:
-      #overlays = import ./overlays {inherit inputs;};
-      # system modules:
-      #systemModules = import ./modules/system;
-      # home-manager modules:
-      #userModules = import ./modules/user;
-      # nix formatter:
-      #formatter = forAllSystems (
-      #  system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style
-      #);
-
 
       # automatically select correct build from localhost name:
       nixosConfigurations = lib.listToAttrs (
@@ -182,16 +163,16 @@
             modules = [ 
               ./hosts/common/core/default.nix
               ./hosts/${role}/${host}/configuration.nix 
-              inputs.home-manager.darwinModules.home-manager {
-                users.users.david.name = "david";
-                users.users.david.home = "/Users/david";
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = { inherit inputs; };
-                  users.david = import ./hosts/${role}/${host}/home.nix;
-                };
-              }
+              #inputs.home-manager.darwinModules.home-manager {
+              #  users.users.david.name = "david";
+              #  users.users.david.home = "/Users/david";
+              #  home-manager = {
+              #    useGlobalPkgs = true;
+              #    useUserPackages = true;
+              #    extraSpecialArgs = { inherit inputs; };
+              #    users.david = import ./hosts/${role}/${host}/home.nix;
+              #  };
+              #}
               inputs.nix-homebrew.darwinModules.nix-homebrew {
                 nix-homebrew = {
                   enable = true;
@@ -210,7 +191,27 @@
       );
 
       #standalone homemanager:
-      #homeConfigurations = { };
+      #homeConfigurations = { };A
+      #
+      #
+      homeConfigurations = lib.listToAttrs (
+        map ({ role, host, arch }: {
+          name = host;
+          value = home-manager.lib.homeManagerConfiguration {
+            pkgs = pkgsFor.${arch};
+            modules = [
+              ./hosts/${role}/${host}/home.nix
+                ./modules/home/theme
+            ];
+            extraSpecialArgs = {
+              inherit inputs outputs lib role host arch;
+            };
+          };
+        }) hosts
+      );
+
+
 
     };
+
 }

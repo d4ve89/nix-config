@@ -1,8 +1,13 @@
-{ pkgs, lib, ... }:
+# NVIM home manager configuration
+{ config, pkgs, lib, ... }: {
 
-# NVF module for NVIM configuration
-{
-  programs.nvf = {
+  options = {
+    editor_neovim.enable = lib.mkEnableOption "enables nvim installation";
+    editor_neovim.orgmode = lib.mkEnableOption "enables orgmode plugins";
+    editor_neovim.animCursor = lib.mkEnableOption "smear effect";
+  };
+
+  config.programs.nvf = lib.mkIf config.editor_neovim.enable {
     enable = true;
     settings = {
 
@@ -24,8 +29,9 @@
 
         theme = {
           enable = true;
-          #name = "ayu";
-          #style = "light";
+          # available options: ayu,
+          name = lib.mkDefault "ayu";
+          style = lib.mkDefault "mirage";
           #name = "base16";
           #name = lib.mkDefault "gruvbox";
           #style = lib.mkDefault "dark";
@@ -33,6 +39,8 @@
           #style = "macchiato";
           #name = "tokyonight"
           #style = "night";
+          #name = "base16";
+          #base16-colors = config.colorScheme.palette;
           transparent = lib.mkForce true;
         };
 
@@ -66,21 +74,21 @@
           "vim-markdown"
           #"nvim-treesitter"
           #pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-          pkgs.vimPlugins.orgmode
-          pkgs.vimPlugins.org-roam-nvim
+          lib.mkIf config.editor_neovim.orgmode pkgs.vimPlugins.orgmode
+          lib.mkIf config.editor_neovim.orgmode pkgs.vimPlugins.org-roam-nvim
           pkgs.vimPlugins.smear-cursor-nvim
         ];
 
         extraPlugins = {
-          smear_cursor = {
+          smear_cursor = lib.mkIf config.editor_neovim.animCursor {
             package = pkgs.vimPlugins.smear-cursor-nvim;
             setup = ''require("smear_cursor").setup({})'';
           };
-          orgmode = {
+          orgmode = lib.mkIf config.editor_neovom.orgmode {
             package = pkgs.vimPlugins.orgmode;
             setup = ''require('orgmode').setup({
       org_agenda_files = '~/Documents/orgfiles/**/*',
-      org_default_notes_file = '~/Documents/orgfiles/refile.org',
+      org_default_notes_file = '~/Documents/orgfiles/nvim-refile.org',
     })
 
     -- NOTE: If you are using nvim-treesitter with ~ensure_installed = "all"~ option
@@ -90,7 +98,7 @@
     --   ignore_install = { 'org' },
     -- })'';
           };
-          org-roam = {
+          org-roam = lib.mkIf config.editor_neovim.orgmode {
           package = pkgs.vimPlugins.org-roam-nvim;
           after = ["orgmode"];
           setup = ''require("org-roam").setup({

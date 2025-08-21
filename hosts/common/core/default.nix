@@ -1,30 +1,26 @@
-#{ config, pkgs, ... }:
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   nix.settings.experimental-features = [ 
     "nix-command" 
     "flakes" 
   ];
 
-  system.primaryUser = "david";
-  time.timeZone = "Europe/Berlin";
-  #i18n.defaultLocale = "en_US.UTF-8";
-  #i18n.supportedLocales = [
-  #  "de_DE.UTF-8/UTF8"
-  #  "en_US.UTF-8/UTF-8"
-  #];
+  system.primaryUser = lib.mkDefault "david";
+  time.timeZone = lib.mkDefault "Europe/Berlin";
 
   #nixpkgs.config.allowUnfree = true;
+
+  # base packages for every environment
   environment.systemPackages = with pkgs; [
-    vim 
-    ncurses
-    tmux
+    vim
+    git
     curl
     wget
-    git
+    ncurses
     ripgrep
     fd
     btop
+    unzip
     home-manager
   ];
 
@@ -34,6 +30,7 @@
     nerd-fonts.terminess-ttf
     nerd-fonts.symbols-only
     nerd-fonts.dejavu-sans-mono
+    nerd-fonts.iosevka
     newcomputermodern
     lmodern
   ];

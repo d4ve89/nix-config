@@ -13,7 +13,6 @@
   home.packages = [
 	  pkgs.hello
 	  pkgs.htop
-    #pkgs.activinspire
     #pkgs.temurin-bin-21
     #pkgs.jdk21
     #pkgs.jetbrains.jdk
@@ -29,6 +28,18 @@
 
   programs.doom-emacs = {
     emacs = pkgs.emacs-macport;
+  };
+
+  wm_aerospace = {
+    enable = true;
+  };
+
+  wm_jankyborders = {
+    enable = true;
+  };
+
+  wm_sketchybar = {
+   enable = false;
   };
 
   home.sessionVariables = {

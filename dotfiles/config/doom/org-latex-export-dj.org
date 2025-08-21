@@ -1,0 +1,55 @@
+#+LATEX_CLASS: org-plain-latex
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LATEX_COMPILER: xelatex
+
+% Geometry and global settings
+#+LATEX_HEADER: \usepackage[top=1.40cm,right=2.5cm,left=2.5cm,bottom=1.75cm]{geometry}
+#+LATEX_HEADER: \pagestyle{empty}
+#+LATEX_HEADER: \usepackage[AUTO]{inputenc}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage{amsmath, amsthm, amssymb}
+#+LATEX_HEADER: \usepackage{fontspec}
+
+% Normal text format
+#+LATEX_HEADER: \usepackage{lmodern}
+#+LATEX_HEADER: \renewcommand{\familydefault}{\sfdefault}
+#+LATEX_HEADER: \justifying
+#+LATEX_HEADER: \usepackage{ragged2e}
+#+LATEX_HEADER: \usepackage[table, xcdraw]{xcolor}
+
+% Code formatting
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \newfontfamily\jbmnf{JetBrainsMono Nerd Font}
+#+LATEX_HEADER: \lstloadlanguages{Java}
+#+LATEX_HEADER: \lstset{language=Java,basicstyle=\jbmnf,keywordstyle=\jbmnf\bfseries,stringstyle=\jbmnf\itshape,breaklines=true,numbers=left}
+
+#+LATEX_HEADER: \usepackage{booktabs}
+#+LATEX_HEADER: \usepackage{longtable}
+#+LATEX_HEADER: \usepackage{tabulary}
+#+LATEX_HEADER: \usepackage{array}
+
+% Full page width columns
+#+LATEX_HEADER: \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+#+LATEX_HEADER: \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+#+LATEX_HEADER: \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+#+LATEX_HEADER: \renewcommand{\toprule}{}
+#+LATEX_HEADER: \renewcommand{\bottomrule}
+
+% tabulary using full page width columns
+#+LATEX_HEADER: \let\oldtabulary\tabulary \renewcommand{\tabulary}[2][\textwidth]{\oldtabulary{#1}{L{3cm}C{9cm}R{3cm}}}
+
+% longtable left alignment
+#+LATEX_HEADER: \let\oldlongtable\longtable \renewcommand{\longtable}[2][|l|l|l|]{\oldlongtable{#1}}
+
+% more compact lists:
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \usepackage[noindentafter]{titlesec}
+#+LATEX_HEADER: \setlist[enumerate]{labelindent=0pt, leftmargin=1.3em, topsep=2pt, partopsep=2pt, parsep=2pt, itemsep=1pt}
+#+LATEX_HEADER: \setlist[itemize]{labelindent=0pt, leftmargin=1.2em, topsep=2pt, partopsep=2pt, parsep=2pt, itemsep=1pt}
+
+% more compact section headlines
+#+LATEX_HEADER: \usepackage{ulem}
+#+LATEX_HEADER: \titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{\uline}
+#+LATEX_HEADER: \titlespacing{\subsection}{0pt}{10pt}{5pt}
+#+LATEX_HEADER: \titleformat{\section}[block]{\Large\bfseries}{\thesection}{1em}{}
+#+OPTIONS: toc:nil num:nil title:nil author:nil date:nil
