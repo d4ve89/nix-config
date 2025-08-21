@@ -10,7 +10,6 @@
   config.programs.nvf = lib.mkIf config.editor_neovim.enable {
     enable = true;
     settings = {
-
       vim = {
         tabline.nvimBufferline = {
           enable = true;

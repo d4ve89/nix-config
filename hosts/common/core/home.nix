@@ -8,19 +8,49 @@
     inputs.nix-doom-emacs-unstraightened.homeModule
     inputs.stylix.homeModules.stylix
     ../../../modules/home
-    #../../../modules/user/nvf/default.nix
-    #${inputs.self}/modules/user/nvf/default.nix
-    #inputs.nix-colors.homeManagerModules.default
-    #../../../modules/user/nix-colors/p10k.nix
-    #../../../modules/user/nix-colors/zsh.nix
-    #../modules/user/aerospace-module.nix
-    #../../default-home.nix
   ];
 
   # user specific packages on all hosts:
-  #home.packages = [
-  #  pkgs.zsh-powerlevel10k
-  #];
+  home.packages = [
+    (pkgs.writeShellApplication {
+      name = "toggle-theme";
+      runtimeInputs = with pkgs; [ home-manager coreutils fzf ];
+      text = ''
+        #!/bin/sh
+
+        # Get the path to the current home-manager generation
+        gen_path=$(home-manager generations | head -1 | grep -o '/nix/store[^ ]*')
+        spec_dir="$gen_path/specialisation"
+
+        if [ ! -d "$spec_dir" ]; then
+          echo "No specialisations found in: $spec_dir"
+          exit 1
+        fi
+
+        specs=$(find "$spec_dir" -mindepth 1 -maxdepth 1 -type f -exec basename {} \;)
+
+        if [ -z "$specs" ]; then
+          echo "No specialisations found."
+          exit 1
+        fi
+
+        selection=$(echo "$specs" | fzf --prompt="Select specialisation: ")
+
+        if [ -z "$selection" ]; then
+          echo "No selection made."
+          exit 0
+        fi
+
+        "$spec_dir/$selection"
+
+        # Optionally store a timestamp
+        mkdir -p "$HOME/.cache"
+        date +%s > "$HOME/.cache/.theme_reload_timestamp"
+
+        echo "Activated specialisation: $selection"
+      '';
+    })
+  ];
 
   # managing dotfiles through 'home.file'.
   home.file = {

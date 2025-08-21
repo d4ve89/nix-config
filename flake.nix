@@ -150,6 +150,9 @@
         }) nixosHosts
       );
 
+      # sudo nix flake update
+      # sudo darwin-rebuild switch --flake .
+      # sudo nixos-rebuild switch --flake .
       darwinConfigurations = lib.listToAttrs (
         map ({ role, host, arch }: {
           name = host;
@@ -162,7 +165,9 @@
             };
             modules = [ 
               ./hosts/common/core/default.nix
-              ./hosts/${role}/${host}/configuration.nix 
+              ./hosts/${role}/${host}/configuration.nix
+              # if you want to switch back to integrated home-manager as nixdarwin-module:
+              #
               #inputs.home-manager.darwinModules.home-manager {
               #  users.users.david.name = "david";
               #  users.users.david.home = "/Users/david";
@@ -196,6 +201,8 @@
         }) darwinHosts
       );
 
+      # standalone home manager configuration
+      # home-manager switch --flake .
       homeConfigurations = lib.listToAttrs (
         map ({ role, host, arch }: {
           name = host;

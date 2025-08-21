@@ -34,6 +34,7 @@
 (package! org-super-agenda)
 (package! org-transclusion)
 (package! org-tree-slide)
+(package! moom)
 (package! org-xopp
   :recipe (:type git
            :repo "https://github.com/mahmoodsh36/org-xopp"
