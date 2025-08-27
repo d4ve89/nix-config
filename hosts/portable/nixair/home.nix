@@ -18,6 +18,7 @@
     #pkgs.jetbrains.jdk
     pkgs.gradle 
     pkgs.nodejs
+    pkgs.excalidraw_export
   ];
 
   #programs.java = {
@@ -27,7 +28,7 @@
   #};
 
   #programs.doom-emacs = {
-  #  emacs = pkgs.emacs-macport;
+    #emacs = pkgs.emacs-macport;
   #};
 
   wm_aerospace = {

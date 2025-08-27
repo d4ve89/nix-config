@@ -1,14 +1,13 @@
 { config, pkgs, lib, ... }: {
 
 # Aerospace Tiling WM configuration
-
-  config.home.file."~/.config/aerospace" = lib.mkIf config.wm_aerospace.enable {
-    source = config.lib.file.mkOutOfStoreSymlink ../../../../dotfiles/aerospace;
+  config.home.file.".config/aerospace" = lib.mkIf config.wm_aerospace.enable {
+    source =  ../../../../dotfiles/config/aerospace;
   };
 
 
-  config.programs.aerospace = {
-    enable = lib.mkIf config.wm_aerospace.enable true;
+  config.programs.aerospace = lib.mkIf config.wm_aerospace.enable {
+    enable = true;
     package = pkgs.aerospace;
     #userSettings = ~.config/aerospace/aerospace.toml;
     #userSettings = {

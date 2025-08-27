@@ -16,6 +16,8 @@ config.gtk = {
   iconTheme.name = "GruvboxPlus";
 };
 
+config.programs.pywal.enable = true;
+
 config.stylix = {
   enable = true;
   autoEnable = true;
@@ -74,7 +76,7 @@ config.programs.nvf.settings.vim.theme.base16-colors = lib.mkDefault {
 
 #config.programs.nvf.settings.vim.theme.style = lib.mkDefault "mirage";
 
-config.home.file.".config/doom/theme/theme.el".text = lib.mkDefault ''(load-theme 'doom-ayu-mirage t)'';
+config.home.file.".config/custom-doom/theme/theme.el".text = lib.mkDefault ''(load-theme 'doom-ayu-mirage t)'';
 config.home.file.".config/ghostty/config".text = lib.mkDefault ''
     theme = Ayu Mirage
     shell-integration = zsh

@@ -2,7 +2,7 @@
 
 # Jankybar (alternative Darwin bar) configuration
   config.home.file.".config/sketchybar" = lib.mkIf config.wm_jankyborders.enable {
-    source = config.lib.file.mkOutOfStoreSymlink ../../../../dotfiles/sketchybar;
+    source =  ../../../../dotfiles/config/sketchybar;
   };
 
   config.programs.sketchybar = lib.mkIf config.wm_sketchybar.enable {

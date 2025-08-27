@@ -20,6 +20,7 @@
 (package! base16-theme)
 (package! catppuccin-theme)
 (package! doom-themes)
+(package! theme-magic)
 
 ;; org extensions:
 ;;
@@ -27,10 +28,14 @@
 (package! ob-mermaid)
 (package! org-download)
 (package! org-drawio)
+(package! org-excalidraw
+  :recipe (:type git :host github :repo "wdavew/org-excalidraw")
+  :pin "9750463dfda28b9ca70df048761c131aa94d6c12")
 (package! org-modern)
 (package! org-present)
 (package! org-roam)
 (package! org-roam-ui)
+(package! org-ros)
 (package! org-super-agenda)
 (package! org-transclusion)
 (package! org-tree-slide)
@@ -61,6 +66,7 @@
 (package! dotenv-mode)
 (package! evil-escape :disable t)
 (package! evil-tutor)
+(package! key-chord)
 (package! magit)
 (package! olivetti)
 (package! openwith)

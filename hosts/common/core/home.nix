@@ -49,7 +49,8 @@
     #  source = ../../../dotfiles/config;
     #  recursive = true;
     #};
-    ".config/doom/org-latex-export-dj.org".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/doom/org-latex-export-dj.org;
+    ".config/custom-doom/org-latex-export-dj.org".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/doom/org-latex-export-dj.org;
+
     #".config/ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/ghostty/config;
     #".config/ghostty/shaders/cursor_smear.glsl".source = ../dotfiles/config/ghostty/shaders/cursor_smear.glsl;
     #".config/jankyborders/jankyborders.toml".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/jankyborders/jankyborders
@@ -86,7 +87,10 @@
     animCursor = true;
   };
 
-  editor_doom-emacs.enable = true;
+  editor_doom-emacs = {
+    enable = true;
+    holoEnable = false;
+  };
 
   services.emacs = {
     enable = true;

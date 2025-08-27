@@ -40,6 +40,7 @@
           source ${config.xdg.configHome}/zsh/syn_highlight-stylix.zsh
           #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#${config.lib.stylix.colors.base03}"
           bindkey '^I^I' autosuggest-accept
+          clear
         '';
       in 
         lib.mkMerge [zshConfigFirst zshConfigLast];

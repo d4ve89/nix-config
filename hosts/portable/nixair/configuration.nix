@@ -6,7 +6,6 @@
   users.users.david.home = "/Users/david";
 
   environment.systemPackages = [
-    pkgs.aerospace
     pkgs.yabai
     pkgs.qutebrowser
     pkgs.gzip
@@ -30,7 +29,7 @@
     #pkgs.scenebuilder
     (pkgs.texlive.combine { 
       inherit (pkgs.texlive)  #scheme-small or #scheme-medium
-      scheme-medium mlmodern enumitem soul titlesec ulem wrapfig capt-of hyperref preprint tabulary listings; })
+      scheme-medium mlmodern babel enumitem soul titlesec ulem wrapfig capt-of hyperref preprint tabulary listings; })
     inputs.curd.packages.aarch64-darwin.default
   ];
 
