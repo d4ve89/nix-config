@@ -52,8 +52,8 @@
     pkgs.hyprland
     pkgs.gzip
     pkgs.unzip
-    pkgs.pngpaste
-    pkgs.pdf2svg
+    #pkgs.pngpaste
+    #pkgs.pdf2svg
     pkgs.mermaid-cli
     pkgs.brave # chromium-browser for mermaid/puppeteer
     pkgs.imagemagick
