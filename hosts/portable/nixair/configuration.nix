@@ -5,6 +5,7 @@
   networking.hostName = "nixair";
   users.users.david.home = "/Users/david";
 
+
   environment.systemPackages = [
     pkgs.yabai
     pkgs.qutebrowser

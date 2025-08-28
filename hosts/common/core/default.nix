@@ -5,7 +5,6 @@
     "flakes" 
   ];
 
-  system.primaryUser = lib.mkDefault "david";
   time.timeZone = lib.mkDefault "Europe/Berlin";
 
   #nixpkgs.config.allowUnfree = true;
