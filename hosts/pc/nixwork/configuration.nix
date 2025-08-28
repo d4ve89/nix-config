@@ -67,7 +67,7 @@
     pkgs.greenfoot
     pkgs.scenebuilder 
     pkgs.drawio
-    pkgs.teams 
+    #pkgs.teams 
     pkgs.libreoffice-still
     #pkgs.temurin-bin-21
     pkgs.jdk21
