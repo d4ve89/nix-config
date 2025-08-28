@@ -42,7 +42,7 @@ These need to be loaded first before the GUI starts
 ;;(load-theme 'doom-gruvbox t)
 ;;(add load path! "~/.config/custom-doom/custom_theme.el")
 ;;(setq doom-font (font-spec :family "Terminess Nerd Font" :size 15))
-;(setq doom-font (font-spec :family "Terminess Nerd Font" :size 15))
+(setq doom-font (font-spec :family "Terminess Nerd Font" :size 15))
 (load  "~/.config/custom-doom/theme/theme.el")
 ;;(load-theme 'doom-ayu-mirage t)
 #+end_src
@@ -336,7 +336,8 @@ These need to be loaded first before the GUI starts
 ;;(load-theme 'doom-palenight t)
 
 ;; Set reusable font name variables
-(defvar my/fixed-width-font "JetBrains Mono Nerd Font"
+;;(defvar my/fixed-width-font "JetBrains Mono Nerd Font"
+(defvar my/fixed-width-font "Terminess Mono Nerd Font"
   "The font to use for monospaced (fixed width) text.")
 
 ;;(defvar my/variable-width-font "Iosevka Aile"

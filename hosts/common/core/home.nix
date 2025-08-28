@@ -101,10 +101,29 @@
 
   programs.git = {
     enable = true;
-    #userName = "d.djaja";
-    userName = "d4ve89";
-    #userEmail = "d.djaja2@shg.schule.koeln";
-    userEmail = "37449430+d4ve89@users.noreply.github.com";
+    includes = [
+      {
+        contents = {
+          user = {
+            name = "d4ve89";
+            email = "37449430+d4ve89@users.noreply.github.com";
+          };
+        };
+        #condition = "gitdir:~/gitea/"
+        condition = "hasconfig:remote.*.url:*github.com*/**";
+      }
+
+      {
+        contents = {
+          user = {
+            name = "d.djaja2";
+            email = "d.djaja2@shg.schule.koeln";
+          };
+        };
+        #condition = "gitdir:~/gitea/"
+        condition = "hasconfig:remote.*.url:*gitea.apps.dj*/**";
+      }
+    ];
     extraConfig.init.defaultBranch = "main";
     aliases = {
       pu = "push";
