@@ -1,12 +1,55 @@
 { config, pkgs, lib, inputs, outputs, ... }:
 {
+
+  imports = [
+    ./hardware-configuration.nix
+  ];
   # The platform the configuration will be used on.
   #nixpkgs.hostPlatform = "aarch64-darwin";
   networking.hostName = "nixwork";
   users.users.david.home = "/home/david";
 
+  # Bootloader
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.initrd.lus.devices."luks-e28c886c-eced-425f-9078-7fb3695a0985".device = "/dev/disk/by-uuid/e28c886c-eced-425f-9078-7fb365a0985";
+
+  users.users.david = {
+    isNormalUser = true;
+    extraGroups = ["wheel" "networkmanager"];
+    packages = with pkgs; [];
+    shell = pkgs.zsh;
+  };
+
+  services.getty.autologinUser = "david";
+
+  i18n.defaultLocale "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "de_DE.UTF-8";
+    LC_IDENTIFICATION = "de_DE.UTF-8";
+    LC_MEASUREMENT = "de_DE.UTF-8";
+    LC_MONETARY = "de_DE.UTF-8";
+    LC_NAME = "de_DE.UTF-8";
+    LC_NUMERIC = "de_DE.UTF-8";
+    LC_PAPER = "de_DE.UTF-8";
+    LC_TELEPHONE = "de_DE.UTF-8";
+    LC_TIME = "de_DE.UTF-8";
+  };
+
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  security.pam.services.sudo.enable = true; 
+
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = [
+    pkgs.zsh
     pkgs.qutebrowser
+    pkgs.hyprland
     pkgs.gzip
     pkgs.unzip
     pkgs.pngpaste
