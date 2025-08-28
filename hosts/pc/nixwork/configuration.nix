@@ -77,7 +77,7 @@
     (pkgs.texlive.combine { 
       inherit (pkgs.texlive)  #scheme-small or #scheme-medium
       scheme-medium mlmodern babel enumitem soul titlesec ulem wrapfig capt-of hyperref preprint tabulary listings; })
-    inputs.curd.packages.x86_linux.default
+    inputs.curd.packages.x86_64-linux.default
   ];
 
   #;system.activationScripts.switchWallpaper.text = ''
