@@ -56,7 +56,6 @@
     pkgs.pdf2svg
     pkgs.mermaid-cli
     pkgs.brave # chromium-browser for mermaid/puppeteer
-    pkgs.zen-browser
     pkgs.imagemagick
     pkgs.xournalpp
     pkgs.krita
