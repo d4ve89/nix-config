@@ -3,6 +3,7 @@
   # The platform the configuration will be used on.
   #nixpkgs.hostPlatform = "aarch64-darwin";
   networking.hostName = "nixair";
+  system.primaryUser = lib.mkDefault "david";
   users.users.david.home = "/Users/david";
 
 

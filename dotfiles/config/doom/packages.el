@@ -16,11 +16,15 @@
 ;;; $DOOMDIR/packages.el
 ;;;
 
-;; themes:
+;; themes and vanity:
 (package! base16-theme)
 (package! catppuccin-theme)
 (package! doom-themes)
 (package! theme-magic)
+(package! holo-layer
+  :recipe  (:type git :host github :repo "manateelazycat/holo-layer"
+            :files ("icon_cache" "plugin" "resources" "swaymsg-treefetch" "*.el" "*.py"))
+  :pin "6584d8057a264f199e0cf6e90095fa63d36e6049")
 
 ;; org extensions:
 ;;

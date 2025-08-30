@@ -89,7 +89,7 @@
 
   editor_doom-emacs = {
     enable = true;
-    holoEnable = false;
+    holoEnable = true;
   };
 
   services.emacs = {
