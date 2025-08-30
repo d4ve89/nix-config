@@ -16,8 +16,7 @@
   };
 
   config.home.packages = lib.mkIf config.editor_doom-emacs.holoEnable [
-    (pkgs.python3.withPackages (pythonPackages: with pythonPackages; [
-    #(pkgs.python3.withPackages (ppkgs: [
+    (pkgs.python3.withPackages (ps: with ps; [
       pyobjc-core
       pyobjc-framework-Cocoa
       epc
@@ -29,21 +28,12 @@
     ]))
   ];
 
-  #buildPythonPackage {
-  #    pname = "TODO";
-  #    version = "TODO";
-  #    src = fetchFromGitHub {
-  #      owner = "TODO";
-  #      repo = "TODO";
-  #      rev = "v${version}";
-  #      sha256 = ""; # TODO
-  #    };
-
   config.home.file.".config/custom-doom/holo.el" = lib.mkIf config.editor_doom-emacs.holoEnable {
     text = ''
       (require 'holo-layer)
       (holo-layer-enable)
       (setq holo-layer-enable-cursor-animation t)
+      (setq holo-layer-python-command "${(pkgs.python3.withPackages (ps: with ps; [ pyobjc-core pyobjc-framework-Cocoa epc sexpdata six inflect pyqt6 pyqt6-sip ]))}/bin/python3")
     '';
   };
 
