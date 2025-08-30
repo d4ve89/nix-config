@@ -12,28 +12,35 @@
     #doomDir = .config/doom;
     tangleArgs = "--all config.org"; #alt option: "."
     extraPackages = epkgs: [
-      #emacsPackages.holo-layer
     ];
   };
 
   config.home.packages = lib.mkIf config.editor_doom-emacs.holoEnable [
-    (pkgs.python313.withPackages (ps: with ps; [
+    (pkgs.python3.withPackages (pythonPackages: with pythonPackages; [
+    #(pkgs.python3.withPackages (ppkgs: [
+      pyobjc-core
+      pyobjc-framework-Cocoa
       epc
       sexpdata
       six
       inflect
       pyqt6
       pyqt6-sip
-      pyobjc-core
-      pyobjc-framework-Cocoa
     ]))
-    #pkgs.gnustep-base
-    #pkgs.qt6.qtbase
   ];
+
+  #buildPythonPackage {
+  #    pname = "TODO";
+  #    version = "TODO";
+  #    src = fetchFromGitHub {
+  #      owner = "TODO";
+  #      repo = "TODO";
+  #      rev = "v${version}";
+  #      sha256 = ""; # TODO
+  #    };
 
   config.home.file.".config/custom-doom/holo.el" = lib.mkIf config.editor_doom-emacs.holoEnable {
     text = ''
-      ;;(add-to-list 'load-path "path-to-holo-layer")
       (require 'holo-layer)
       (holo-layer-enable)
       (setq holo-layer-enable-cursor-animation t)
