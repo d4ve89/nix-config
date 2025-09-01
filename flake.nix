@@ -56,6 +56,7 @@
 
     # sources for individual programs:
     curd.url = "github:Wraient/curd";
+    #aerospace-pin17.url = "github:NixOS/nixpkgs/c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
     #idea-c-pin2024.url = "github:NixOS/nixpkgs/c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
 
   };
@@ -63,7 +64,11 @@
   outputs = { self, nixpkgs, nix-darwin, home-manager, systems, ... }@inputs:
     let
       inherit (self) outputs;
-      lib = nixpkgs.lib // inputs.home-manager.lib;
+      lib = nixpkgs.lib // home-manager.lib;
+
+      #inputs.aerospace-pin17 = final: prev: {
+      #  aerospace = inputs.aerospace-pin17.legacyPackages.${prev.system}.aerospace;
+      #};
 
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
 
@@ -76,6 +81,7 @@
             overlays = [
               (self: super: import ./packages { pkgs = super; })
             #inputs.idea-c-pin2024
+            #inputs.aerospace-pin17
              ];
            }
         );
@@ -143,7 +149,8 @@
               isDarwin = false;
               role = role;
             };
-            modules = [ 
+            modules = [
+              #inputs.aerospace-pin17
               ./hosts/common/core/default.nix
               ./hosts/${role}/${host}/configuration.nix ];
           };
@@ -163,7 +170,8 @@
               isDarwin = true;
               role = role;
             };
-            modules = [ 
+            modules = [
+              #inputs.aerospace-pin17
               ./hosts/common/core/default.nix
               ./hosts/${role}/${host}/configuration.nix
               # if you want to switch back to integrated home-manager as nixdarwin-module:

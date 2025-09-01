@@ -32,6 +32,7 @@ These need to be loaded first before the GUI starts
 (add-to-list 'default-frame-alist '(alpha . 95))
 ;; Troubleshooting: 
 ;;(set-face-background 'default 'unspecified) 
+(setq menu-bar-mode t)
 #+end_src
 
 ** Theme and Font
@@ -77,6 +78,7 @@ These need to be loaded first before the GUI starts
   (org-xopp-setup))
 
 (add-to-list 'exec-path "/run/current-system/sw/bin/")
+(add-to-list 'exec-path "/Users/david/.nix-profile/bin")
 
 ;; Set reusable font name variables
 (defvar my/fixed-width-font "JetBrains Mono Nerd Font"

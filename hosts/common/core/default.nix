@@ -25,8 +25,10 @@
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code #fira-sans fira-mono
+    nerd-fonts.ubuntu-mono
+    nerd-fonts.ubuntu-sans
     nerd-fonts.terminess-ttf
+    nerd-fonts.inconsolata-go
     nerd-fonts.symbols-only
     nerd-fonts.dejavu-sans-mono
     nerd-fonts.iosevka

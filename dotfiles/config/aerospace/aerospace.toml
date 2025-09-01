@@ -31,11 +31,20 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = ['exec-and-forget sketchybar --trigger custom_space_windows_change', 'move-mouse window-lazy-center']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = false
+
+# Notify sketchybar about workspace change:
+    #'sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
+exec-on-workspace-change = ['/bin/bash', '-c',
+    #'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE; aerospace list-windows --all | grep "Picture in Picture" | cut -d"|" -f1 | xargs aerospace move-node-to-workspace $AEROSPACE_FOCUSED_WORKSPACE --window-id',
+    #'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE; aerospace list-windows --all | grep "zsh" | cut -d"|" -f1 | xargs aerospace move-node-to-workspace $AEROSPACE_FOCUSED_WORKSPACE --window-id',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE;',
+]
 
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
@@ -56,10 +65,10 @@ automatically-unhide-macos-hidden-apps = false
 [gaps]
     inner.horizontal = 10
     inner.vertical =   10
-    outer.left =       10
-    outer.bottom =     10
-    outer.top =        10
-    outer.right =      10
+    outer.left =       15
+    outer.bottom =     15
+    outer.top =        14
+    outer.right =      20
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -126,15 +135,15 @@ automatically-unhide-macos-hidden-apps = false
     alt-cmd-9 = 'workspace 9'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    alt-cmd-shift-1 = 'move-node-to-workspace 1'
-    alt-cmd-shift-2 = 'move-node-to-workspace 2'
-    alt-cmd-shift-3 = 'move-node-to-workspace 3'
-    alt-cmd-shift-4 = 'move-node-to-workspace 4'
-    alt-cmd-shift-5 = 'move-node-to-workspace 5'
-    alt-cmd-shift-6 = 'move-node-to-workspace 6'
-    alt-cmd-shift-7 = 'move-node-to-workspace 7'
-    alt-cmd-shift-8 = 'move-node-to-workspace 8'
-    alt-cmd-shift-9 = 'move-node-to-workspace 9'
+    alt-cmd-shift-1 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 1 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-2 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 2 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-3 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 3 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-4 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 4 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-5 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 5 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-6 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 6 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-7 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 7 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-8 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 8 && sketchybar --trigger custom_space_windows_change'
+    alt-cmd-shift-9 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 9 && sketchybar --trigger custom_space_windows_change'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
@@ -144,18 +153,13 @@ automatically-unhide-macos-hidden-apps = false
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
 
-    alt-cmd-q = 'close --quit-if-last-window'
-  
-    alt-cmd-d = ['exec-and-forget open -a Raycast'] 
-
     #cmd-ctrl-alt-d = ['exec-and-forget open -a ~/.config/scripts/ComboLauncher.app']
 
     #cmd-ctrl-alt-d = ['''exec-and-forget osascript -e '
     #     do shell script "sh ~/.config/scripts/combo-launcher.sh"'
     #     ''']
-    #cmd-ctrl-alt-enter = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
-    #cmd-ctrl-alt-enter = ['exec-and-forget open -n Ghostty']
-    # alt-enter = '''exec-and-forget osascript -e '
+
+    #alt-enter = '''exec-and-forget osascript -e '
     #cmd-ctrl-alt-enter = '''exec-and-forget osascript -e '
 #        tell application "Ghostty"
 #          activate
@@ -166,11 +170,26 @@ automatically-unhide-macos-hidden-apps = false
 #      '''
     #cmd-ctrl-alt-enter = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
 
-    alt-cmd-enter = ['exec-and-forget open -n /Applications/Ghostty.app']
-    alt-cmd-w = ['exec-and-forget open -n /Applications/Zen.app']
+   # My personal keybindings
 
+    # Close current window:
+    alt-cmd-q = 'close --quit-if-last-window'
+
+    # Open combo-launcher (Raycast):
+    alt-cmd-d = ['exec-and-forget open -a Raycast']
+
+    # New Terminal:
+    alt-cmd-enter = ['exec-and-forget open -n /Applications/Ghostty.app']
     alt-cmd-t = ['exec-and-forget open -n /Applications/Ghostty.app']
     #cmd-ctrl-alt-t = ['exec-and-forget open -n /Applications/Nix\ Apps/Ghostty.app']
+
+    # New Web Browser:
+    alt-cmd-w = ['exec-and-forget open -n /Applications/Zen.app']
+
+    # Open Editor:
+    alt-cmd-e = ['exec-and-forget open -n ~/Applications/Home Manager Apps/Emacs.app']
+
+    # Other stuff:
     alt-cmd-c = ['exec-and-forget open -a Calendar']
     alt-cmd-m = ['exec-and-forget open -a Mail']
     alt-cmd-f = 'fullscreen'
@@ -195,7 +214,17 @@ automatically-unhide-macos-hidden-apps = false
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
 
-# Fix Orion
+# Window rules
+
+# Orion Preview fix:
 [[on-window-detected]]
     if.window-title-regex-substring = "Orion Preview"
-      run = []
+    run = []
+
+[[on-window-detected]]
+    if.app-id = 'com.bitwarden.desktop'
+    run = 'layout floating'
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.FaceTime'
+    run = 'layout floating'

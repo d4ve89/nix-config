@@ -11,15 +11,21 @@
 
   # host specific user packages:
   home.packages = [
-	  pkgs.hello
-	  pkgs.htop
+    pkgs.hello
+    pkgs.htop
     #pkgs.temurin-bin-21
     #pkgs.jdk21
     #pkgs.jetbrains.jdk
+    pkgs.gdb
     pkgs.gradle 
     pkgs.nodejs
     pkgs.excalidraw_export
+    pkgs.autoconf
   ];
+
+  #programs.doom-emacs = {
+  #  emacs = pkgs.emacs-macport;
+  #};
 
   #programs.java = {
   #  enable = true;
@@ -27,20 +33,31 @@
     #package = pkgs.jetbrains.jdk-21;
   #};
 
-  #programs.doom-emacs = {
-    #emacs = pkgs.emacs-macport;
-  #};
-
-  wm_aerospace = {
+  programs.zsh = {
     enable = true;
+    #shellAliases = {
+    #  emacs = "~/Applications/Home\ Manager\ Apps/Emacs.app/Contents/MacOS/Emacs";
+    #};
   };
+
+  wm_aerospace.enable = false;
+ 
+
+  editor_doom-emacs.holoEnable = true;
+  editor_doom-emacs.enable = true;
+
+  wm_skhd.enable = true;
+
+  #wm_yabai = {
+  #  enable = true;
+  #};
 
   wm_jankyborders = {
     enable = true;
   };
 
   wm_sketchybar = {
-   enable = false;
+   enable = true;
   };
 
   home.sessionVariables = {

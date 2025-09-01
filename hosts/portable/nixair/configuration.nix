@@ -1,27 +1,30 @@
 { config, pkgs, lib, inputs, outputs, ... }:
 {
+  imports = [
+    ../../../modules/darwin/yabai
+    #../../../modules/darwin/doom-emacs
+  ];
   # The platform the configuration will be used on.
   #nixpkgs.hostPlatform = "aarch64-darwin";
   networking.hostName = "nixair";
   system.primaryUser = lib.mkDefault "david";
   users.users.david.home = "/Users/david";
 
+  #editor_doom-emacs.enable = true;
+
 
   environment.systemPackages = [
-    pkgs.yabai
     pkgs.qutebrowser
     pkgs.gzip
     pkgs.unzip
     pkgs.pngpaste
     pkgs.pdf2svg
     #pkgs.mermaid-cli -> homebrew
+    #pkgs.emacs-macport
     pkgs.brave # chromium-browser for mermaid/puppeteer
     pkgs.imagemagick
     #pkgs.xournalpp no darwin build -> homebrew
     #pkgs.ghostty-bin broken package -> homebrew
-    pkgs.sketchybar-app-font
-    pkgs.sketchybar
-    pkgs.jankyborders
     pkgs.pandoc
     pkgs.jetbrains.idea-community-bin
     #pkgs.temurin-bin-21
@@ -42,6 +45,7 @@
         "choose-gui"
         "coreutils"
         "mermaid-cli"
+	"qt6"
       ];
       casks = [
         "drawio"
@@ -54,6 +58,8 @@
         "nextcloud-vfs"
         "karabiner-elements"
         "zen"
+        "font-sf-pro"
+        "sf-symbols"
         "kindavim"
         "raycast"
         "dmenu-mac"
@@ -136,5 +142,5 @@
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
-  system.stateVersion = 6;
+  system.stateVersion = 6; #1-6
 }

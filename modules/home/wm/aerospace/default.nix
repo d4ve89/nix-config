@@ -1,14 +1,30 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }:
+# let
+#      pkgs = import (builtins.fetchGit {
+#          # Descriptive name to make the store path easier to identify
+#          name = "aerospace-17";
+#          url = "https://github.com/NixOS/nixpkgs/";
+#          ref = "refs/heads/nixpkgs-unstable";
+#          rev = "c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
+#      }) {};
+
+#      myPkg = pkgs.aerospace;
+#      aerospace-17 = pkgs.aerospace;
+# in
+{
 
 # Aerospace Tiling WM configuration
   config.home.file.".config/aerospace" = lib.mkIf config.wm_aerospace.enable {
     source =  ../../../../dotfiles/config/aerospace;
+    force = true;
   };
 
 
   config.programs.aerospace = lib.mkIf config.wm_aerospace.enable {
     enable = true;
     package = pkgs.aerospace;
+    #package = aerospace-17;
+
     #userSettings = ~.config/aerospace/aerospace.toml;
     #userSettings = {
 
