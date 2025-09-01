@@ -54,7 +54,7 @@
         window_shadow       = "float";
         window_opacity      = "on";
         window_opacity_duration = 0.2;
-        active_window_opacity = 1.0;
+        active_window_opacity = 0.9;
         normal_window_opacity = 0.8;
         window_animation_duration = 0.5;
         window_animation_easing = "ease_out_quint";

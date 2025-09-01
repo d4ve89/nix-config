@@ -1,26 +1,11 @@
 # DOOM EMACS home manager configuration: holo layer
 { config, pkgs, lib, ... }: 
 
-
-
-#let
-  #emacsMacport = pkgs.emacs-macport.overrideAttrs (old: {
-  #  nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pkgs.autoconf pkgs.automake pkgs.libtool ];
-
-    #installPhase = ''
-    #  mkdir -p $out/bin
-    #  cp -r src/emacs $out/bin/emacs
-    #'';
-  #});
-
-#in {
 {
   options = {
     editor_doom-emacs.enable = lib.mkEnableOption "enables doom emacs config";
     editor_doom-emacs.holoEnable = lib.mkEnableOption "enables fancy animation layer";
   };
-
-
 
   config.programs.doom-emacs = lib.mkIf config.editor_doom-emacs.enable {
     enable = true;
@@ -40,8 +25,6 @@
     extraPackages = epkgs: [
     ];
   };
-
-
 
   config.home.packages = lib.mkIf config.editor_doom-emacs.holoEnable [
     (pkgs.python3.withPackages (ps: with ps; [

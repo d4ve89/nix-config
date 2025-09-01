@@ -10,8 +10,6 @@
   system.primaryUser = lib.mkDefault "david";
   users.users.david.home = "/Users/david";
 
-  #editor_doom-emacs.enable = true;
-
 
   environment.systemPackages = [
     pkgs.qutebrowser

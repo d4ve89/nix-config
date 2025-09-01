@@ -13,7 +13,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.luks.devices."luks-e28c886c-eced-425f-9078-7fb3695a0985".device = "/dev/disk/by-uuid/e28c886c-eced-425f-9078-7fb365a0985";
+  boot.initrd.luks.devices."luks-8aad1066-263c-4b24-8c48-2066abc1f526".device = "/dev/disk/by-uuid/8aad1066-263c-4b24-8c48-2066abc1f526";
 
   users.users.david = {
     isNormalUser = true;
