@@ -43,13 +43,17 @@
   };
 
   security.pam.services.sudo.enable = true; 
-
   nixpkgs.config.allowUnfree = true;
+
+  programs.hyprland = {
+    enable = true
+    withUWSM = true;
+    xwayland.enable = true;
+  };
 
   environment.systemPackages = [
     pkgs.zsh
     pkgs.qutebrowser
-    pkgs.hyprland
     pkgs.gzip
     pkgs.unzip
     #pkgs.pngpaste

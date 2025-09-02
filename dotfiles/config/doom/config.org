@@ -128,6 +128,7 @@ These need to be loaded first before the GUI starts
   :custom
   (org-image-actual-width nil))
 
+(use-package! ob-mermaid)
 (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
 ;; setting brave as the chromium puppeteer
 ;; (setq ob-mermaid-cli-path "/run/current-system/sw/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
