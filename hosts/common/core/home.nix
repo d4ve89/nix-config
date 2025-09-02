@@ -87,10 +87,10 @@
     animCursor = true;
   };
 
-  editor_doom-emacs = {
-    enable = true;
-    holoEnable = true;
-  };
+  #editor_doom-emacs = {
+  #  enable = true;
+  #  holoEnable = true;
+  #};
 
   services.emacs = {
     enable = true;
@@ -109,8 +109,8 @@
             email = "37449430+d4ve89@users.noreply.github.com";
           };
         };
-        #condition = "gitdir:~/gitea/"
-        condition = "hasconfig:remote.*.url:*github.com*/**";
+        condition = "gitdir:~/repos/github/";
+        #condition = "hasconfig:remote.*.url:*github.com*/**";
       }
 
       {
@@ -120,8 +120,8 @@
             email = "d.djaja2@shg.schule.koeln";
           };
         };
-        #condition = "gitdir:~/gitea/"
-        condition = "hasconfig:remote.*.url:*gitea.apps.dj*/**";
+        condition = "gitdir:~/repos/schule/";
+        #condition = "hasconfig:remote.*.url:*gitea.apps.dj*/**";
       }
     ];
     extraConfig.init.defaultBranch = "main";

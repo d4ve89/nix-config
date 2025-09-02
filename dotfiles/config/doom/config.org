@@ -52,6 +52,7 @@ These need to be loaded first before the GUI starts
 ** Animations
 #+begin_src emacs-lisp :tangle config.el
 (load "~/.config/custom-doom/holo.el")
+(load "~/.config/custom-doom/animation-macplugin.el")
 #+end_src
 
 * Editor Settings
@@ -135,7 +136,7 @@ These need to be loaded first before the GUI starts
 
 (use-package! org-download
   :after org
-
+  :config
 ;; Drag-and-drop to `dired`
   (add-hook 'dired-mode-hook 'org-download-enable)
 
@@ -145,8 +146,7 @@ These need to be loaded first before the GUI starts
 ;;  (setq org-download-screenshot-method "grim -g \"$(slurp)\" %s")
 ;;  (setq org-download-screenshot-method "flameshot gui -p %s")
 
-  (setq org-download-screenshot-method "screencapture -i s%")
-)
+  (setq org-download-screenshot-method "screencapture -i s%"))
 
 
 
@@ -330,9 +330,9 @@ These need to be loaded first before the GUI starts
 
 ;; More minimal UI
 (setq inhibit-startup-screen t)
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
+(setq menu-bar-mode 0)
+(setq tool-bar-mode 0)
+(setq scroll-bar-mode 0)
 
 ;; Let the desktop background show through
 (set-frame-parameter (selected-frame) 'alpha '(97 . 100))
@@ -360,7 +360,7 @@ These need to be loaded first before the GUI starts
 ;;; Org Mode Appearance ------------------------------------
 
 ;; Load org-faces to make sure we can set appropriate faces
-(use-package! 'org-faces)
+(use-package! org-faces)
 
 ;; Hide emphasis markers on formatted text
 (setq org-hide-emphasis-markers t)

@@ -43,7 +43,8 @@
         "choose-gui"
         "coreutils"
         "mermaid-cli"
-	"qt6"
+        "swift"
+        "qt6"
       ];
       casks = [
         "drawio"
@@ -71,6 +72,8 @@
       ];
       masApps = {
         "Vimlike" = 1584519802;
+        "Jamf Teacher" = 1458800229;
+
       };
       onActivation.cleanup = "zap";
       onActivation.autoUpdate = true;

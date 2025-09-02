@@ -25,6 +25,10 @@
   :recipe  (:type git :host github :repo "manateelazycat/holo-layer"
             :files ("icon_cache" "plugin" "resources" "swaymsg-treefetch" "*.el" "*.py"))
   :pin "6584d8057a264f199e0cf6e90095fa63d36e6049")
+(package! mac-plugin
+  :recipe (:type git :host github :repo "happyo/EmacsMacPluginModule"
+         :files ("Sources" "Tests" "*el" ".swift"))
+  :pin "efddba283ad99581ba9adf346380ce3239acc5c2")
 
 ;; org extensions:
 ;;

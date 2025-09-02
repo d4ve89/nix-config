@@ -42,9 +42,11 @@
 
   wm_aerospace.enable = false;
  
-
-  editor_doom-emacs.holoEnable = true;
-  editor_doom-emacs.enable = true;
+  editor_doom-emacs = {
+    enable = true;
+    animMacEnable = false;
+    holoEnable = true;
+  };
 
   wm_skhd.enable = true;
 

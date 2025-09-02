@@ -100,4 +100,5 @@ lalt + cmd - w: open -n /Applications/Zen.app
 lalt + cmd - e: open -n "~/Applications/Home Manager Apps/Emacs.app"
 lalt + cmd - c: open -a Calendar
 lalt + cmd - m: open -a Mail
-lalt + cmd - d: open -a Raycast 
+lalt + cmd - d: open -a Raycast
+lalt + cmd - q: yabai -m window --close
