@@ -20,6 +20,15 @@
     pkgs.excalidraw_export
   ];
 
+  wayland.windowManager.hyprland.settings = {
+    decoration = {
+      shadow_offset = "0 5";
+    };
+    "$mod" = "SUPER";
+
+  };
+
+
   #programs.java = {
   #  enable = true;
   #  package = pkgs.temurin-bin-21;
