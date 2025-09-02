@@ -124,10 +124,24 @@ These need to be loaded first before the GUI starts
   :config
   (org-excalidraw-directory "~/Nextcloud/Excalidraw"))
 
-
 (use-package! org-tree-slide
   :custom
   (org-image-actual-width nil))
+
+(setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
+;; setting brave as the chromium puppeteer
+;; (setq ob-mermaid-cli-path "/run/current-system/sw/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
+
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t)
+      (scheme . t)
+      (html . t)
+      (css . t)
+      (nix . t)
+      (python . t)
+      (java . t)))
+
 
 (with-eval-after-load "moom"
   ;; add settings here ...
@@ -146,23 +160,7 @@ These need to be loaded first before the GUI starts
 ;;  (setq org-download-screenshot-method "grim -g \"$(slurp)\" %s")
 ;;  (setq org-download-screenshot-method "flameshot gui -p %s")
 
-  (setq org-download-screenshot-method "screencapture -i s%"))
-
-
-
-(setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
-;; setting brave as the chromium puppeteer
-;; (setq ob-mermaid-cli-path "/run/current-system/sw/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
-
-(org-babel-do-load-languages
-    'org-babel-load-languages
-    '((mermaid . t)
-      (scheme . t)
-      (html . t)
-      (css . t)
-      (nix . t)
-      (python . t)
-      (java . t)))
+  (setq org-download-screenshot-method "screencapture -i %s"))
 #+end_src
 
 
