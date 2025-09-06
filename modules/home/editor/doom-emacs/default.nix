@@ -84,23 +84,23 @@ in
   #  force = true;
   #};
 
-  config.home.file.".config/custom-doom/animation-macplugin.el" = lib.mkIf config.editor_doom-emacs.animMacEnable {
-    text = ''
-      (add-to-list 'load-path "~/.config/custom-doom/EmacsMacPluginModule")
-      (require 'mac-plugin)
-      (use-package mac-plugin)
-
-      ;; Need disable tool-bar
-      ;;(when (fboundp 'tool-bar-mode)
-      ;;  (tool-bar-mode -1))
-      ;; If the downloaded repository directory is different from the above,
-      ;; you can specify the actual directory of the repository with macos-project-root
-      ;; (setq macos-project-root '.config/custom-doom/EmacsMacPluginModule)
-      (mac-plugin-load-release)
-      (atmosphere-enable)
-      (mac-plugin-set-cursor-color "#fcc800")
-      (mac-plugin-set-shadow-opacity 1.0)
-    '';
-  };
+ # config.home.file.".config/custom-doom/animation-macplugin.el" = lib.mkIf config.editor_doom-emacs.animMacEnable {
+  #  text = ''
+   #   (add-to-list 'load-path "~/.config/custom-doom/EmacsMacPluginModule")
+    #  (require 'mac-plugin)
+     # (use-package mac-plugin)
+#
+ #     ;; Need disable tool-bar
+  #    ;;(when (fboundp 'tool-bar-mode)
+   #   ;;  (tool-bar-mode -1))
+    #  ;; If the downloaded repository directory is different from the above,
+     # ;; you can specify the actual directory of the repository with macos-project-root
+      #;; (setq macos-project-root '.config/custom-doom/EmacsMacPluginModule)
+      #(mac-plugin-load-release)
+      #(atmosphere-enable)
+      #(mac-plugin-set-cursor-color "#fcc800")
+      #(mac-plugin-set-shadow-opacity 1.0)
+    #'';
+ # };
 
 }

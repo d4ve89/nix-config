@@ -2,6 +2,7 @@
 {
   imports = [
     ../../../modules/darwin/yabai
+    inputs.mac-app-util.darwinModules.default
     #../../../modules/darwin/doom-emacs
   ];
   # The platform the configuration will be used on.
@@ -10,9 +11,11 @@
   system.primaryUser = lib.mkDefault "david";
   users.users.david.home = "/Users/david";
 
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [
     pkgs.qutebrowser
+    pkgs.gh
     pkgs.gzip
     pkgs.unzip
     pkgs.pngpaste
@@ -36,6 +39,11 @@
     inputs.curd.packages.aarch64-darwin.default
   ];
 
+  fonts.packages = with pkgs; [
+    corefonts
+  ];
+
+
   homebrew = {
       enable = true;
       brews = [
@@ -43,6 +51,7 @@
         "choose-gui"
         "coreutils"
         "mermaid-cli"
+        "pngpaste"
         "swift"
         "qt6"
       ];

@@ -50,9 +50,12 @@ These need to be loaded first before the GUI starts
 #+end_src
 
 ** Animations
+:PROPERTIES:
+:ID:       2a8fed5c-4956-408c-981f-0092c02bb0da
+:END:
 #+begin_src emacs-lisp :tangle config.el
 (load "~/.config/custom-doom/holo.el")
-(load "~/.config/custom-doom/animation-macplugin.el")
+;;(load "~/.config/custom-doom/animation-macplugin.el")
 #+end_src
 
 * Editor Settings
@@ -143,17 +146,10 @@ These need to be loaded first before the GUI starts
       (python . t)
       (java . t)))
 
-
-(with-eval-after-load "moom"
-  ;; add settings here ...
-  ;; (setq moom-use-font-module nil)
-  (moom-mode 1))
-
-(use-package! org-download
-  :after org
-  :config
+;;(use-package! org-download)
+  ;;:after org
 ;; Drag-and-drop to `dired`
-  (add-hook 'dired-mode-hook 'org-download-enable)
+;;(add-hook 'dired-mode-hook 'org-download-enable)
 
 ;; snippet from Librephoenix
 ;; system-wm-type, wayland or x11? only should be considered if system-nix-profile is "personal" or "work"
@@ -161,7 +157,33 @@ These need to be loaded first before the GUI starts
 ;;  (setq org-download-screenshot-method "grim -g \"$(slurp)\" %s")
 ;;  (setq org-download-screenshot-method "flameshot gui -p %s")
 
-  (setq org-download-screenshot-method "screencapture -i %s"))
+;(setq org-download-screenshot-method "screencapture -i s%")
+;;()
+(add-to-list 'exec-path "/opt/homebrew/bin")
+
+(use-package org-download
+    :after org
+    :defer nil
+    :custom
+    (org-download-method 'directory)
+    (org-download-image-dir "images")
+    (org-download-heading-lvl nil)
+    (org-download-timestamp "%Y%m%d-%H%M%S_")
+    (org-image-actual-width 300)
+    (org-download-screenshot-method "/opt/homebrew/bin/pngpaste %s")
+    :bind
+    ("C-M-y" . org-download-screenshot)
+    :config
+    (require 'org-download))
+
+(setq org-download-screenshot-method "/opt/homebrew/bin/pngpaste %s")
+(add-hook 'dired-mode-hook 'org-download-enable)
+
+(with-eval-after-load "moom"
+  ;; add settings here ...
+  ;; (setq moom-use-font-module nil)
+  (moom-mode 1))
+
 #+end_src
 
 

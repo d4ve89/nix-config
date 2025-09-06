@@ -54,9 +54,9 @@
         window_shadow       = "float";
         window_opacity      = "on";
         window_opacity_duration = 0.3;
-        active_window_opacity = 0.95;
-        normal_window_opacity = 0.8;
-        window_animation_duration = 0.2;
+        active_window_opacity = 0.98;
+        normal_window_opacity = 0.92;
+        window_animation_duration = 0.1;
         window_animation_easing = "ease_out_quint";
         insert_feedback_color = "0xff9dd274";
         split_ratio = 0.50;
