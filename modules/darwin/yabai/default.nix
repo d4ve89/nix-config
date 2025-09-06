@@ -75,7 +75,15 @@
 
     extraConfig = ''
     	sudo yabai --load-sa
-	yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+        yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+
+        #yabai -m space --destroy-all
+        #yabai -m space --create
+        #yabai -m space --create
+        #yabai -m space --create
+        #yabai -m space --create
+        #yabai -m space --create
+
 
         # rules
         yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor)$" manage=off
@@ -83,9 +91,9 @@
         yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
         yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
         yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
-	yabai -m rule --add app="^Emacs$" manage=on
+        yabai -m rule --add app="^Emacs$" manage=on
 
-	echo "yabai configuration loaded.."
+        echo "yabai configuration loaded.."
 
         # Any other arbitrary config here
       '';

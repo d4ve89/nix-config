@@ -49,6 +49,7 @@
   };
 
   wm_skhd.enable = true;
+  wm_karabiner.enable = true;
 
   #wm_yabai = {
   #  enable = true;

@@ -14,6 +14,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [
+    pkgs.apple-sdk
     pkgs.qutebrowser
     pkgs.gh
     pkgs.gzip
@@ -70,7 +71,6 @@
         "sf-symbols"
         "kindavim"
         "raycast"
-        "dmenu-mac"
         "bluej"
         "greenfoot"
         "scenebuilder"
@@ -108,14 +108,15 @@
   # emacs = pkgs.emacs-macport;
   #};
 
-
   system.defaults = {
+    WindowManager.EnableStandardClickToShowDesktop = false;
     dock.autohide = true;
     dock.show-recents = false;
     dock.minimize-to-application = true;
     dock.static-only = false;
 	  dock.persistent-apps = [
-	    "/Applications/Orion.app"
+	    "/Applications/Zen.app"
+      "~/Applications/Home Manager Trampolines/Emacs.app"
       #"${pkgs.ghostty-bin}/Applications/Ghostty.app"
       "/Applications/Ghostty.app"
 	    "/System/Applications/Mail.app"
@@ -138,12 +139,19 @@
     };
   };
 
-  system.activationScripts.switchWallpaper.text = ''
-         echo >&2 "Switching wallpapers..."
-         /usr/local/bin/desktoppr 0 $(find /Users/david/Pictures/wallpapers/gruvbox -type f | shuf -n 1)
-     '';
+  system.activationScripts = {
+    switchWallpaper.text = ''
+      echo >&2 "Switching wallpapers..."
+      /usr/local/bin/desktoppr 0 $(find /Users/david/Pictures/wallpapers/gruvbox -type f | shuf -n 1)
+    '';
 
-
+    #autostartRaycast.text = ''
+    extraActivation.text = ''
+      osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Raycast.app", hidden:true}'
+      osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Karabiner-Elements.app", hidden:true}'
+      osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Nextcloud.app", hidden:false}'
+    '';
+  };
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
