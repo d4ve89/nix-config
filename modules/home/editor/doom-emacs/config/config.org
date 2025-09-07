@@ -117,7 +117,7 @@ These need to be loaded first before the GUI starts
 (with-eval-after-load 'org-xournalpp
   (setq org-xournalpp-template-getter
         (lambda ()
-          "~/git/nix-config/dotfiles/config/xournalpp/blackboard.xopp")))
+          "~/.config/xournalpp/blackboard.xopp")))
 
 (add-to-list 'exec-path "/Applications/Xournal++.app/Contents/MacOS")
 

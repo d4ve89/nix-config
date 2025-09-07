@@ -1,9 +1,10 @@
 { pkgs, lib, ... }: {
 
   imports = [
-    ./shell
     ./editor
-    ./wm
+    ./shell
+    ./term
     ./theme
+    ./wm
   ];
 }

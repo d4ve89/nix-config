@@ -49,7 +49,6 @@
     #  source = ../../../dotfiles/config;
     #  recursive = true;
     #};
-    ".config/custom-doom/org-latex-export-dj.org".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/doom/org-latex-export-dj.org;
 
     #".config/ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../../../dotfiles/config/ghostty/config;
     #".config/ghostty/shaders/cursor_smear.glsl".source = ../dotfiles/config/ghostty/shaders/cursor_smear.glsl;

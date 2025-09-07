@@ -243,7 +243,7 @@ specialisation = {
 
     banana-blueberry.configuration = {
       stylix.base16Scheme = builtins.path {
-        path = ../../../dotfiles/config/base16/banana-blueberry-trim.yaml;
+        path = ./base16/banana-blueberry-trim.yaml;
       };
       stylix.polarity = "dark";
       programs.nvf.settings.vim.theme.name = lib.mkOverride 50 "base16";
@@ -261,7 +261,7 @@ specialisation = {
 
     ic-orange-ppl.configuration = {
       stylix.base16Scheme = builtins.path {
-        path = ../../../dotfiles/config/base16/ic-orange-ppl-trim.yaml;
+        path = ./base16/ic-orange-ppl-trim.yaml;
       };
       stylix.polarity = "dark";
       programs.nvf.settings.vim.theme.name = lib.mkOverride 50 "base16";

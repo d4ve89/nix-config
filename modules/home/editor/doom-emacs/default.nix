@@ -1,4 +1,4 @@
-# DOOM EMACS home manager configuration: holo layer
+# DOOM EMACS home manager configuration with holo-layer
 { config, pkgs, lib, ... }: 
 
 let
@@ -26,15 +26,7 @@ in
 
   config.programs.doom-emacs = lib.mkIf config.editor_doom-emacs.enable {
     enable = true;
-    #emacs = pkgs.emacs;
-    #emacsMacport;
-    #emacs = pkgs.emacsMacport.overrideAttrs (old: {
-    #  nativeBuildInputs = (old.nativeBuildInputs or []) ++ (with pkgs; [ autoconf automake texinfo libtool pkg-config ]);
-    #  preConfigure = (old.preConfigure or "") + ''
-    #    ./autogen.sh
-    #  '';
-    #});:
-
+    # using  vanilla emacs + patching and building myself:
     emacs = pkgs.emacs.overrideAttrs (old: {
       nativeBuildInputs = (old.nativeBuildInputs or []) ++ (with pkgs; [ autoconf automake texinfo libtool pkg-config ]);
       patches = (old.patches or []) ++ [ fixWindowRolePatch systemAppearancePatch roundUndecoratedFramePatch];
@@ -43,13 +35,31 @@ in
       '';
     });
 
-    #provideEmacs = false;
+    # alternative: using emacs-macport from the nixpkg repo:
+    #emacs = pkgs.emacsMacport.overrideAttrs (old: {
+    #  nativeBuildInputs = (old.nativeBuildInputs or []) ++ (with pkgs; [ autoconf automake texinfo libtool pkg-config ]);
+    #  preConfigure = (old.preConfigure or "") + ''
+    #    ./autogen.sh
+    #  '';
+    #});:
+
+    #provideEmacs = false; # equals no parallel binaries
     #doomLocalDir = .local/share/nix-doom;
-    doomDir = ../../../../dotfiles/config/doom;
-    #doomDir = .config/doom;
+    doomDir = ./config; # relative to the path in the git repo
     tangleArgs = "--all config.org"; #alt option: "."
     extraPackages = epkgs: [
     ];
+  };
+
+  config.home.file.".config/custom-doom/org-latex-export-dj.org" = lib.mkIf config.editor_doom-emacs.enable {
+    source = ./config/org-latex-export-dj.org;
+    force = true;
+  };
+
+  config.home.file.".config/xournalpp" = lib.mkIf config.editor_doom-emacs.enable {
+   source = ./xournalpp;
+   recursive = true;
+   force = true;
   };
 
   config.home.packages = lib.mkIf config.editor_doom-emacs.holoEnable [
@@ -78,6 +88,10 @@ in
     '';
   };
 
+
+
+  # if holo-layer breaks, try this alternative plugin:
+  #
   #config.home.file.".config/custom-doom/EmacsMacPluginModule" = lib.mkIf config.editor_doom-emacs.animMacEnable {
   #  source = ../../../../dotfiles/config/doom/EmacsMacPluginModule;
   #  recursive = true;

@@ -40,6 +40,8 @@
     #};
   };
 
+  term_ghostty.enable = true;
+
   wm_aerospace.enable = false;
  
   editor_doom-emacs = {

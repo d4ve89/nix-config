@@ -2,6 +2,5 @@
 
   imports = [
     ./yabai
-    ./doom-emacs
   ];
 }

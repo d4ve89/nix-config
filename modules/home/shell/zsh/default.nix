@@ -12,7 +12,8 @@
 
   config.home.file = {
     "${config.xdg.configHome}/zsh/p10k.zsh" = lib.mkIf config.shell_zsh.p10k {
-      source = config.lib.file.mkOutOfStoreSymlink ../../../../dotfiles/config/zsh/p10k.zsh;
+      source = config.lib.file.mkOutOfStoreSymlink ./config/p10k.zsh;
+      force = true;
     };
   };
 

@@ -85,6 +85,4 @@ config.home.file.".config/ghostty/config".text = lib.mkDefault ''
     quit-after-last-window-closed = true
     background-opacity = 0.90
     custom-shader = shaders/cursor_smear.glsl'';
-
-
 }
