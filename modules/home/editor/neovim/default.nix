@@ -1,5 +1,10 @@
 # NVIM home manager configuration
-{ config, pkgs, lib, inputs, ... }: {
+{ config, pkgs, lib, inputs, ... }: 
+
+let
+  inherit (inputs.nvf.lib.nvim.dag) entryAfter;
+
+in {
 
   options = {
     editor_neovim.enable = lib.mkEnableOption "enables nvim installation";
@@ -7,9 +12,6 @@
     editor_neovim.animCursor = lib.mkEnableOption "smear effect";
   };
 
-  let
-	inherit (inputs.nvf.lib.nvim.sag) entryAfter
-  in {
   config.programs.nvf = lib.mkIf config.editor_neovim.enable {
     enable = true;
     settings = {

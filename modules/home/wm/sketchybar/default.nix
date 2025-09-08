@@ -17,9 +17,9 @@
     pkgs.sbarlua
   ];
 
-  config.programs.sketchybar lib.mkIF config.wm_sketchybar.enable = {
+  config.programs.sketchybar = lib.mkIf config.wm_sketchybar.enable {
    enable = true;
-   service = enable;
+   service.enable = true;
    package = pkgs.sketchybar;
   };
 
