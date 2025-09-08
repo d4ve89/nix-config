@@ -1,5 +1,5 @@
 # NVIM home manager configuration
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, inputs, ... }: {
 
   options = {
     editor_neovim.enable = lib.mkEnableOption "enables nvim installation";
@@ -7,6 +7,9 @@
     editor_neovim.animCursor = lib.mkEnableOption "smear effect";
   };
 
+  let
+	inherit (inputs.nvf.lib.nvim.sag) entryAfter
+  in {
   config.programs.nvf = lib.mkIf config.editor_neovim.enable {
     enable = true;
     settings = {
@@ -59,11 +62,19 @@
             base0E = config.lib.stylix.colors.base0E;
             base0F = config.lib.stylix.colors.base0F;
           };
-
           #name = "base16";
           #base16-colors = config.colorScheme.palette;
           transparent = lib.mkForce true;
         };
+
+	luaConfigRC.transparentTheme = entryAfter [ "theme" ] 
+     	# lua
+     	''
+       	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+       	vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+       	vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+       	vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+    	'';
 
         filetree.nvimTree = {
           enable = true;
