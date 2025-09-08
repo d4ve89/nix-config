@@ -18,10 +18,10 @@ volume_change() {
   esac
 
   sketchybar --set volume_icon label=$ICON \
-             --set $NAME slider.percentage=$INFO
+             --set $NAME slider.percentage=${INFO:-0}
 
   INITIAL_WIDTH="$(sketchybar --query $NAME | jq -r '.slider.width // 0')"
-  if [ "$INITIAL_WIDTH" -eq "0" ]; then
+  if [[ -n "$INITIAL_WIDTH" && "$INITIAL_WIDTH" -eq "0" ]]; then
     sketchybar --animate tanh 30 --set $NAME slider.width=$WIDTH 
   fi
 
@@ -35,7 +35,7 @@ volume_change() {
 }
 
 mouse_clicked() {
-  osascript -e "set volume output volume $PERCENTAGE"
+  osascript -e "set volume output volume ${PERCENTAGE:-50}"
 }
 
 case "$SENDER" in

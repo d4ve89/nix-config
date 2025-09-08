@@ -7,8 +7,9 @@ spaces_update() {
 
   while read -r line; do
     for space in $line; do
-      apps="$(yabai -m query --windows --space "$space" | jq -r '.[].app')"
+      #apps="$(yabai -m query --windows --space "$space" | jq -r '.[].app')"
 
+      apps="$(yabai -m query --windows --space "$space" | jq -r '.[] | select(.app != "Finder") | .app')"
       if [ -n "$apps" ]; then
         args+=(--set space.$space drawing=on)
 
