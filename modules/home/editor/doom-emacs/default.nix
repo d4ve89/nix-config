@@ -62,6 +62,19 @@ in
    force = true;
   };
 
+  config.home.file.".config/puppeteer/puppeteerConfig.json" = lib.mkIf config.editor_doom-emacs.enable {
+    text = ''
+      {
+      "executablePath": "/run/current-system/sw/bin/brave"
+      }
+    '';
+    force = true;
+  };
+  # alt: npx puppeteer browsers install chrome-headless-shell
+  # "executablePath": "~/.cache/puppeteer/chrome-headless-shell/mac_arm-140.0.7339.82/chrome-headless-shell-mac-arm64/chrome-headless-shell"
+
+
+
   config.home.packages = lib.mkIf config.editor_doom-emacs.holoEnable [
     (pkgs.python3.withPackages (ps: with ps; [
       pyobjc-core
@@ -87,7 +100,6 @@ in
       (holo-layer-enable)
     '';
   };
-
 
 
   # if holo-layer breaks, try this alternative plugin:

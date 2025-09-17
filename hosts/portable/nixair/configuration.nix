@@ -17,10 +17,12 @@
     pkgs.apple-sdk
     pkgs.qutebrowser
     pkgs.gh
+    pkgs.gimp
     pkgs.gzip
     pkgs.unzip
     pkgs.pngpaste
     pkgs.pdf2svg
+    pkgs.mpv
     #pkgs.mermaid-cli -> homebrew
     #pkgs.emacs-macport
     pkgs.brave # chromium-browser for mermaid/puppeteer
@@ -31,6 +33,7 @@
     pkgs.jetbrains.idea-community-bin
     #pkgs.temurin-bin-21
     pkgs.jdk21
+    pkgs.zstd
     #pkgs.openjfx
     #pkgs.jetbrains.jdk
     #pkgs.scenebuilder
