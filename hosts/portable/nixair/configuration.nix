@@ -33,7 +33,8 @@
     #pkgs.xournalpp no darwin build -> homebrew
     #pkgs.ghostty-bin broken package -> homebrew
     pkgs.pandoc
-    pkgs.jetbrains.idea-community-bin
+    pkgs.jetbrains.idea
+    #pkgs.jetbrains.jdk
     #pkgs.temurin-bin-21
     pkgs.jdk21
     pkgs.zstd

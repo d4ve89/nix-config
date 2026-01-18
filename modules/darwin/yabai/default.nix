@@ -1,19 +1,13 @@
 { config, pkgs, lib, ... }:
-let
-  myYabai = pkgs.yabai.overrideAttrs (oldAttrs: rec {
-    version = "7.1.16";
-    #src = pkgs.fetchFromGitHub {
-      #owner = "koekeishiya";
-      #repo = "yabai";
-      #rev = "v${version}";
-      #sha256 = "1w6bxilwf117v2s6k0jf68ppxk6qmcclz9vw57mrv47qwv9cqysr";
-    #};
-    src = pkgs.fetchurl {
-      url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
-      sha256 = "0sv03b9i5nrkjrz7hliq5g3l9w48j1izbnjcm938pz4as4df7mf4";
-    };
-  });
-in
+#let
+#  myYabai = pkgs.yabai.overrideAttrs (oldAttrs: rec {
+#    version = "7.1.16";
+#    src = pkgs.fetchurl {
+#      url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
+#      sha256 = "0sv03b9i5nrkjrz7hliq5g3l9w48j1izbnjcm938pz4as4df7mf4";
+#    };
+#  });
+#in
 {
 
   # Yabai Tiling WM configuration
@@ -28,7 +22,7 @@ in
 
   services.yabai = {
     enable = true;
-    package = myYabai;
+ #   package = myYabai;
     enableScriptingAddition = true;
     #config = {
     #  focus_follows_mouse          = "autoraise";
