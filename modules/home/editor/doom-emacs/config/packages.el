@@ -21,6 +21,7 @@
 (package! catppuccin-theme)
 (package! doom-themes)
 (package! theme-magic)
+(package! mixed-pitch)
 (package! holo-layer
   :recipe  (:type git :host github :repo "manateelazycat/holo-layer"
             :files ("icon_cache" "plugin" "resources" "swaymsg-treefetch" "*.el" "*.py"))
@@ -47,6 +48,7 @@
 (package! org-super-agenda)
 (package! org-transclusion)
 (package! org-tree-slide)
+(package! dslide)
 (package! moom)
 (package! org-xopp
   :recipe (:type git

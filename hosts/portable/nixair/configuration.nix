@@ -17,12 +17,15 @@
     pkgs.apple-sdk
     pkgs.qutebrowser
     pkgs.gh
-    pkgs.gimp
+    #pkgs.gimp
     pkgs.gzip
     pkgs.unzip
     pkgs.pngpaste
+    pkgs.mermaid-cli
     pkgs.pdf2svg
-    pkgs.mpv
+    pkgs.moonlight-qt
+    #pkgs.mpv
+    #pkgs.mpvScripts.uosc
     #pkgs.mermaid-cli -> homebrew
     #pkgs.emacs-macport
     pkgs.brave # chromium-browser for mermaid/puppeteer
@@ -57,12 +60,16 @@
         "mermaid-cli"
         "pngpaste"
         "swift"
+        "curl"
+        "mpv"
         "qt6"
+        "tccutil"
       ];
       casks = [
         "drawio"
         "krita"
         "xournal++"
+        "gimp"
         #"xppen-pentablet" # wrong version
         "ghostty"
         "hammerspoon"
@@ -81,6 +88,7 @@
         "microsoft-onenote"
         "microsoft-word"
         "libreoffice"
+        "kdeconnect"
       ];
       masApps = {
         "Vimlike" = 1584519802;
@@ -91,6 +99,7 @@
       onActivation.autoUpdate = true;
       onActivation.upgrade = true;
       global.autoUpdate = true;
+      greedyCasks = true;
   };
 
   launchd.user = {
@@ -138,6 +147,7 @@
 	  NSGlobalDomain = {
       AppleICUForce24HourTime = true;
 	    AppleInterfaceStyle = "Dark";
+      "com.apple.swipescrolldirection" = false;
 	    KeyRepeat = 2;
     };
   };

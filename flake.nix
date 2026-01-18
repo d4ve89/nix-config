@@ -4,9 +4,10 @@
   inputs = {
     # official package sources:
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
-    nixpkgs-darwin.url = "github:nix-darwin/nix-darwin/master";
-    nixpkgs-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    #nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    #nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/master";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-wsl.url = "github:nix-community/NixOS-WSL/main";
     nixpkgs-wsl.inputs.nixpkgs.follows = "nixpkgs";
     hardware.url = "github:nixos/nixos-hardware";
@@ -14,18 +15,20 @@
     # default system names (aarch-darwin, x86_64-linux, etc.):
     systems.url = "github:nix-systems/default";
 
-    # sources to declare user and home settings:
+    # Sources to declare user and home settings:
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
    
     # sources to declare homebrew casks and brews:
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    #nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
     homebrew-core.url = "github:homebrew/homebrew-core";
     homebrew-cask.url = "github:homebrew/homebrew-cask";
     homebrew-core.flake = false;
     homebrew-cask.flake = false;
 
+    homebrew-kdeconnect.url = "github:imshuhao/homebrew-kdeconnect";
+    homebrew-kdeconnect.flake = false;
+    
     # sources to declare disk partitions:
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +43,7 @@
 
     # sources to declare nix-doom-emacs:
     nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
-    nix-doom-emacs-unstraightened.inputs.nixpkgs.follows="";
+    nix-doom-emacs-unstraightened.inputs.nixpkgs.follows="nixpkgs";
 
     # sources to declare neovim config:
     nvf.url = "github:notashelf/nvf";
@@ -56,6 +59,7 @@
 
     # sources for individual programs:
     curd.url = "github:Wraient/curd";
+    curd.inputs.nixpkgs.follows="nixpkgs";
     #aerospace-pin17.url = "github:NixOS/nixpkgs/c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
     #idea-c-pin2024.url = "github:NixOS/nixpkgs/c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
 
@@ -82,7 +86,20 @@
               (self: super: import ./packages { pkgs = super; })
             #inputs.idea-c-pin2024
             #inputs.aerospace-pin17
-             ];
+              #(final: prev: {
+              #  assimp = prev.assimp.overrideAttrs (oldAttrs: {
+              #    cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [ "-DASSIMP_BUILD_TESTS=OFF" ];
+              #    nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ prev.pkg-config ];
+              #    #buildInputs = (oldAttrs.buildInputs or []) ++ [ prev.darwin.apple_sdk.frameworks.CoreServices ];
+              #    doCheck = false; # Disable checkPhase to skip running tests
+              #  });
+              #})
+              #(final: prev: {
+              #  sbcl = prev.sbcl.overrideAttrs (oldAttrs: {
+              #    doCheck = false;
+              #  });
+              #})
+            ];
            }
         );
 
@@ -170,6 +187,7 @@
               isDarwin = true;
               role = role;
             };
+            #enableNixpkgsReleaseCheck = false;
             modules = [
               #inputs.aerospace-pin17
               ./hosts/common/core/default.nix
@@ -200,6 +218,7 @@
                   taps = {
                     "homebrew/homebrew-core" = inputs.homebrew-core;
                     "homebrew/homebrew-cask" = inputs.homebrew-cask;
+                    "imshuhao/homebrew-kdeconnect" = inputs.homebrew-kdeconnect;
                   };
                   mutableTaps = false;
                 };

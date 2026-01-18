@@ -86,7 +86,6 @@ in
       pyqt6
       pyqt6-sip
     ]))
-    pkgs.qt6.full
   ];
 
   config.home.file.".config/custom-doom/holo.el" = lib.mkIf config.editor_doom-emacs.holoEnable {

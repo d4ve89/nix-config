@@ -123,11 +123,14 @@
         #condition = "hasconfig:remote.*.url:*gitea.apps.dj*/**";
       }
     ];
-    extraConfig.init.defaultBranch = "main";
-    aliases = {
-      pu = "push";
-      ch = "checkout";
-      co = "commit";
+
+    settings = {
+      init.defaultBranch = "main";
+      aliases = {
+        pu = "push";
+        ch = "checkout";
+        co = "commit";
+      };
     };
   };
 

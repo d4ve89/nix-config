@@ -6,11 +6,14 @@
 (add-to-list 'exec-path "/run/current-system/sw/bin/")
 (add-to-list 'exec-path "/Users/david/.nix-profile/bin")
 (add-to-list 'exec-path "/Applications/Xournal++.app/Contents/MacOS")
+(setenv "PATH" (string-join exec-path ":"))
 #+end_src
 
 * Input Method
 #+begin_src emacs-lisp :tangle config.el
 (setq default-input-method "german-postfix")
+(add-hook 'text-mode-hook
+  (lambda () (set-input-method "german-postfix")))
 (use-package! org-ros)
 #+end_src
 
@@ -60,6 +63,13 @@ These need to be loaded first before the GUI starts
 ;;(add load path! "~/.config/custom-doom/custom_theme.el")
 ;;(setq doom-font (font-spec :family "Terminess Nerd Font" :size 15))
 (setq doom-font (font-spec :family "Terminess Nerd Font" :size 15))
+(setq doom-variable-pitch-font (font-spec :family "Latin Modern Sans" :size 15))
+(use-package! mixed-pitch
+  ;;:hook
+  ;; If you want it in all text modes:
+  ;; (text-mode . mixed-pitch-mode))
+)
+
 (load  "~/.config/custom-doom/theme/theme.el")
 ;;(load-theme 'doom-ayu-mirage t)
 (setq org-pretty-entities t)
@@ -98,18 +108,19 @@ These need to be loaded first before the GUI starts
   :config
   (org-xopp-setup))
 
+i
 ;; Set reusable font name variables
-(defvar my/fixed-width-font "JetBrainsMono Nerd Font"
-  "The font to use for monospaced (fixed width) text.")
+;;(defvar my/fixed-width-font "JetBrainsMono Nerd Font"
+  ;;"The font to use for monospaced (fixed width) text.")
 
 ;;(defvar my/variable-width-font "Iosevka Aile"
-(defvar my/variable-width-font "Latin Modern Sans"
-  "The font to use for variable-pitch (document) text.")
+;;(defvar my/variable-width-font "Latin Modern Sans"
+  ;;"The font to use for variable-pitch (document) text.")
 
 ;; NOTE: These settings might not be ideal for your machine, tweak them as needed!
-(set-face-attribute 'default nil :font my/fixed-width-font :weight 'light :height 180)
-(set-face-attribute 'fixed-pitch nil :font my/fixed-width-font :weight 'light :height 190)
-(set-face-attribute 'variable-pitch nil :font my/variable-width-font :weight 'light :height 1.3)
+;;(set-face-attribute 'default nil :font my/fixed-width-font :weight 'light :height 180)
+;(set-face-attribute 'fixed-pitch nil :font my/fixed-width-font :weight 'light :height 190)
+;;(set-face-attribute 'variable-pitch nil :font my/variable-width-font :weight 'light :height 1.3)
 
 
 ;;(use-package! org-krita
@@ -143,10 +154,12 @@ These need to be loaded first before the GUI starts
   :custom
   (org-image-actual-width nil))
 
-(use-package! ob-mermaid)
-(setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
+(use-package! ob-mermaid
+  :custom
+  (org-image-actual-width nil))
+;; (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
 ;; Setting brave as the chromium puppeteer
-;; (setq ob-mermaid-cli-path "/run/current-system/sw/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
+(setq ob-mermaid-cli-path "/run/current-system/sw/bin/mmdc --puppeteerConfigFile ~/.config/puppeteer/puppeteerConfig.json")
 
 (org-babel-do-load-languages
     'org-babel-load-languages

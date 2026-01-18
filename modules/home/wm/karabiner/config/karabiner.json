@@ -39,16 +39,7 @@
                 {
                     "disable_built_in_keyboard_if_exists": true,
                     "identifiers": {
-                        "device_address": "d7-21-14-81-38-c6",
-                        "is_keyboard": true,
-                        "is_pointing_device": true
-                    },
-                    "ignore": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": true,
-                    "identifiers": {
-                        "device_address": "d7-21-14-81-2a-a6",
+                        "device_address": "d7-21-14-81-2a-af",
                         "is_keyboard": true,
                         "is_pointing_device": true
                     },

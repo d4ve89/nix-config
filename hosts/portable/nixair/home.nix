@@ -21,6 +21,7 @@
     pkgs.nodejs
     pkgs.excalidraw_export
     pkgs.autoconf
+    pkgs.drawio
   ];
 
   #programs.doom-emacs = {
@@ -40,6 +41,9 @@
     #};
   };
 
+  #services.kdeconnect.enable = true;
+  # option not available on darwin yet
+   
   term_ghostty.enable = true;
 
   wm_aerospace.enable = false;
