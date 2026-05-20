@@ -63,7 +63,7 @@
         window_shadow       = "float";
         window_opacity      = "on";
         window_opacity_duration = 0.3;
-        active_window_opacity = 0.98;
+        active_window_opacity = 1.00;
         normal_window_opacity = 0.92;
         window_animation_duration = 0.1;
         window_animation_easing = "ease_out_quint";
@@ -101,7 +101,7 @@
         yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
         yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
         yabai -m rule --add app="^Emacs$" manage=on
-
+        yabai -m rule --add app="^LibreOffice$" manage=on
         echo "yabai configuration loaded.."
 
         # Any other arbitrary config here

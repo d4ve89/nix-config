@@ -40,15 +40,21 @@
        (:if (featurep :system 'macos) macos)
        (tty +osc)
 
+       :tools
+       lsp
+
        :lang
        emacs-lisp
        (org                    ; flags for orgmode
         +pretty                ; Nice org-mode extras
         +dragndrop             ; Drag & drop files/images into Org buffers
-        +roam2                 ; Roam 2.0 implementation
+        +roam                 ; Roam 2.0 implementation
         +journal               ; Org journal support
         +download)             ; Enable org-download
        (nix +lsp)
+       (java +lsp)
+       (go +lsp)
+       (rust +lsp)
 
        :config
        (default +bindings +smartparens))

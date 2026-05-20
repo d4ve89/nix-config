@@ -3,7 +3,8 @@
 {
   imports = [
     #../../common/core/home.nix
-    inputs.mac-app-util.homeManagerModules.default
+    #inputs.mac-app-util.homeManagerModules.default
+    inputs.zen-browser.homeModules.twilight
   ];
 
   home.username = "david";
@@ -16,14 +17,34 @@
     #pkgs.temurin-bin-21
     #pkgs.jdk21
     #pkgs.jetbrains.jdk
-    pkgs.gdb
+    #pkgs.gdb
     pkgs.gradle 
     pkgs.nodejs
-    pkgs.excalidraw_export
+    pkgs.gopls
+    pkgs.rust-analyzer
+    pkgs.jdt-language-server
+    #pkgs.go
+    #pkgs.cargo
+    #pkgs.rustc
+    #pkgs.excalidraw_export
     pkgs.autoconf
     pkgs.drawio
   ];
 
+
+  programs.zen-browser = {
+    enable = true;
+    profiles = {
+      default = {
+        isDefault = true;
+      };
+    };
+  };
+
+  stylix.targets.zen-browser.profileNames = ["default"];
+  
+
+  
   #programs.doom-emacs = {
   #  emacs = pkgs.emacs-macport;
   #};
@@ -45,6 +66,7 @@
   # option not available on darwin yet
    
   term_ghostty.enable = true;
+  media_mpv.enable = true;
 
   wm_aerospace.enable = false;
  

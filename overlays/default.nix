@@ -17,4 +17,16 @@ let
         config.allowUnfree = true;
       };
     };
+
+
+
+  yt-dlp = super.yt-dlp.overridePythonAttrs (o: {
+      dependencies = builtins.filter (
+        p:
+        !(builtins.elem p.pname [
+          "cffi"
+          "secretstorage"
+        ])
+      ) o.dependencies;
+  });
 }

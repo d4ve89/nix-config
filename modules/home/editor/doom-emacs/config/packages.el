@@ -20,6 +20,7 @@
 (package! base16-theme)
 (package! catppuccin-theme)
 (package! doom-themes)
+(package! nerd-icons)
 (package! theme-magic)
 (package! mixed-pitch)
 (package! holo-layer
@@ -49,6 +50,7 @@
 (package! org-transclusion)
 (package! org-tree-slide)
 (package! dslide)
+(package! moc)
 (package! moom)
 (package! org-xopp
   :recipe (:type git

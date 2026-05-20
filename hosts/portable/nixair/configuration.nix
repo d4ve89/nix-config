@@ -2,12 +2,14 @@
 {
   imports = [
     ../../../modules/darwin/yabai
-    inputs.mac-app-util.darwinModules.default
+    #inputs.mac-app-util.darwinModules.default
     #../../../modules/darwin/doom-emacs
   ];
   # The platform the configuration will be used on.
   #nixpkgs.hostPlatform = "aarch64-darwin";
   networking.hostName = "nixair";
+  networking.localHostName = "nixair";
+  environment.etc."hostname".text = "nixair";
   system.primaryUser = lib.mkDefault "david";
   users.users.david.home = "/Users/david";
 
@@ -20,15 +22,30 @@
     #pkgs.gimp
     pkgs.gzip
     pkgs.unzip
+    pkgs._7zz
+    pkgs.android-tools
+    pkgs.logisim-evolution
+    pkgs.cmake
+    pkgs.rustc
+    pkgs.cargo
+    pkgs.go
+    pkgs.gopls
+    pkgs.graphviz
+    pkgs.nixfmt
+    pkgs.nerdfix
     pkgs.pngpaste
     pkgs.mermaid-cli
     pkgs.pdf2svg
+    pkgs.pdfarranger
     pkgs.moonlight-qt
+    pkgs.vlc-bin-universal
+    #pkgs.pear-desktop
     #pkgs.mpv
     #pkgs.mpvScripts.uosc
     #pkgs.mermaid-cli -> homebrew
     #pkgs.emacs-macport
     pkgs.brave # chromium-browser for mermaid/puppeteer
+    #pkgs.opencode
     pkgs.imagemagick
     #pkgs.xournalpp no darwin build -> homebrew
     #pkgs.ghostty-bin broken package -> homebrew
@@ -45,6 +62,8 @@
       inherit (pkgs.texlive)  #scheme-small or #scheme-medium
       scheme-medium mlmodern babel enumitem soul titlesec ulem wrapfig capt-of hyperref preprint tabulary listings; })
     inputs.curd.packages.aarch64-darwin.default
+    #inputs.lobster.packages.aarch64-darwin.default
+    #pkgs.gnused
   ];
 
   fonts.packages = with pkgs; [
@@ -53,8 +72,11 @@
 
 
   homebrew = {
-      enable = true;
+    enable = true;
+    user = "david";
       brews = [
+        "fzf"
+        "gsed"
         "mas"
         "choose-gui"
         "coreutils"
@@ -65,19 +87,24 @@
         "mpv"
         "qt6"
         "tccutil"
+        "mingw-w64"
+        "caarlos0/tap/timer"
+        "opencode"
       ];
       casks = [
+        #"opencode-desktop"
         "drawio"
         "krita"
         "xournal++"
         "gimp"
         #"xppen-pentablet" # wrong version
         "ghostty"
+        "grayjay"
         "hammerspoon"
         "desktoppr"
         "nextcloud-vfs"
         "karabiner-elements"
-        "zen"
+        #"zen"
         "font-sf-pro"
         "sf-symbols"
         "kindavim"
@@ -85,17 +112,26 @@
         "bluej"
         "greenfoot"
         "scenebuilder"
+        "private-internet-access"
         "microsoft-teams"
         "microsoft-onenote"
         "microsoft-word"
         "libreoffice"
-        "kdeconnect"
+        "kamillobinski/thock/thock"
+        "TheBoredTeam/boring-notch/boring-notch"
+        "pear-devs/pear/pear-desktop"
+        #"imshuhao/kdeconnect/kdeconnect"
+        #"kde-mac/kde/kdeconnect" = sod
+        "soduto" # drop-in replaement for kdeconnect
+        "caffeine"
       ];
+      caskArgs.no_quarantine = true;
       masApps = {
         "Vimlike" = 1584519802;
         "Jamf Teacher" = 1458800229;
 
       };
+      taps = builtins.attrNames config.nix-homebrew.taps;
       onActivation.cleanup = "zap";
       onActivation.autoUpdate = true;
       onActivation.upgrade = true;
@@ -128,10 +164,14 @@
     dock.minimize-to-application = true;
     dock.static-only = false;
 	  dock.persistent-apps = [
-	    "/Applications/Zen.app"
-      "~/Applications/Home Manager Trampolines/Emacs.app"
+	    #"/Applications/Zen.app"
+      #"/Users/${system.primaryUser}/Home Manager Apps/Zen Browser (Twilight).app"
+      #"/Users/${system.primaryUser}/Home Manager Apps/Emacs.app"
+      "/Users/david/Applications/Home Manager Apps/Zen Browser (Twilight).app"
+      "/Users/david/Applications/Home Manager Apps/Emacs.app"
       #"${pkgs.ghostty-bin}/Applications/Ghostty.app"
       "/Applications/Ghostty.app"
+      "/opt/homebrew/Caskroom/pear-desktop/latest/YouTube Music.app"
 	    "/System/Applications/Mail.app"
 	    "/System/Applications/Calendar.app"
     ];

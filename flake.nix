@@ -4,6 +4,8 @@
   inputs = {
     # official package sources:
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    #nixpkgs.url = "github:NixOS/nixpkgs/70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7";
+    
     #nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     #nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
@@ -26,8 +28,22 @@
     homebrew-core.flake = false;
     homebrew-cask.flake = false;
 
-    homebrew-kdeconnect.url = "github:imshuhao/homebrew-kdeconnect";
-    homebrew-kdeconnect.flake = false;
+    #homebrew-kdeconnect.url = "github:imshuhao/homebrew-kdeconnect";
+    #homebrew-kdeconnect.flake = false;
+
+    #homebrew-kde-mac.url = "gitlab:kde-mac/homebrew-kde";
+    #homebrew-kde-mac.flake = false;
+
+    homebrew-caarlos0.url = "github:caarlos0/homebrew-tap";
+    homebrew-thock.url = "github:kamillobinski/homebrew-thock";
+    homebrew-boring-notch.url = "github:TheBoredTeam/homebrew-boring-notch";
+    homebrew-pear.url = "github:pear-devs/homebrew-pear";
+
+    homebrew-caarlos0.flake = false;
+    homebrew-thock.flake = false;
+    homebrew-boring-notch.flake = false;
+    homebrew-pear.flake = false;
+
     
     # sources to declare disk partitions:
     disko.url = "github:nix-community/disko";
@@ -57,9 +73,23 @@
     mac-app-util.url = "github:hraban/mac-app-util";
     mac-app-util.inputs.nixpkgs.follows = "nixpkgs";
 
+    #zen-browser.url = "github:youwen5/zen-browser-flake";
+    #zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        # IMPORTANT: To ensure compatibility with the latest Firefox version, use nixpkgs-unstable.
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
+    
     # sources for individual programs:
     curd.url = "github:Wraient/curd";
     curd.inputs.nixpkgs.follows="nixpkgs";
+    lobster.url = "github:justchokingaround/lobster";
+    lobster.inputs.nixpkgs.follows="nixpkgs";
+    lobster.inputs.systems.url = "github:nix-systems/default";
     #aerospace-pin17.url = "github:NixOS/nixpkgs/c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
     #idea-c-pin2024.url = "github:NixOS/nixpkgs/c5dd43934613ae0f8ff37c59f61c507c2e8f980d";
 
@@ -83,6 +113,35 @@
             config.allowUnfree = true;
             config.allowUnfreePredicate = _: true;
             overlays = [
+
+              (final: prev: {
+                ttfautohint = prev.ttfautohint.override { withQt = false; };  # Deaktiviere GUI auf Darwin, um Segfault zu vermeiden
+              })
+              #(final: prev: {
+              #  yt-dlp = prev.yt-dlp.overridePythonAttrs (old: {
+              #    # don't use gnome keyring
+              #    dependencies = builtins.filter (
+              #      p: p.pname != "cffi" && p.pname != "secretstorage" && p.pname != "jeepney"
+              #    ) old.dependencies;
+              #  });
+              #})
+
+              #(_f: p: {
+              #  yt-dlp = p.yt-dlp.overridePythonAttrs (o: {
+              #    # don't use gnome keyring
+              #    dependencies = (
+              #      __filter (
+              #        p:
+              #        !(__elem p.pname [
+              #          "cffi"
+              #          "secretstorage"
+              #          "jeepney"
+              #        ])
+              #      ) o.dependencies
+              #    );
+              #  });
+              #})
+
               (self: super: import ./packages { pkgs = super; })
             #inputs.idea-c-pin2024
             #inputs.aerospace-pin17
@@ -218,7 +277,12 @@
                   taps = {
                     "homebrew/homebrew-core" = inputs.homebrew-core;
                     "homebrew/homebrew-cask" = inputs.homebrew-cask;
-                    "imshuhao/homebrew-kdeconnect" = inputs.homebrew-kdeconnect;
+                    "caarlos0/homebrew-tap" = inputs.homebrew-caarlos0;
+                    "kamillobinski/homebrew-thock" = inputs.homebrew-thock;
+                    "TheBoredTeam/homebrew-boring-notch" = inputs.homebrew-boring-notch;
+                    "pear-devs/homebrew-pear" = inputs.homebrew-pear;
+                    #"imshuhao/homebrew-kdeconnect" = inputs.homebrew-kdeconnect;
+                    #"kde-mac/homebrew-kde" = inputs.homebrew-kde-mac;
                   };
                   mutableTaps = false;
                 };

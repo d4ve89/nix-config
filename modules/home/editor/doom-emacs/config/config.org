@@ -7,6 +7,8 @@
 (add-to-list 'exec-path "/Users/david/.nix-profile/bin")
 (add-to-list 'exec-path "/Applications/Xournal++.app/Contents/MacOS")
 (setenv "PATH" (string-join exec-path ":"))
+
+(setq org-clock-persist-file (expand-file-name "org-clock-save.el" "~/.local/share/doom/"))
 #+end_src
 
 * Input Method
@@ -43,11 +45,16 @@ These need to be loaded first before the GUI starts
 #+end_src
 
 ** Transparency 
-#+begin_src emacs-lisp :tangle config.el 
-(set-frame-parameter (selected-frame) 'alpha-background 95)
-(add-to-list 'default-frame-alist '(alpha-background . 95))
-(set-frame-parameter (selected-frame) 'alpha 95)
-(add-to-list 'default-frame-alist '(alpha . 95))
+#+begin_src emacs-lisp :tangle config.el
+(set-frame-parameter (selected-frame) 'alpha-background 100)
+(add-to-list 'default-frame-alist '(alpha-background . 100))
+(set-frame-parameter (selected-frame) 'alpha 100)
+(add-to-list 'default-frame-alist '(alpha . 100))
+
+;;(set-frame-parameter (selected-frame) 'alpha-background 95)
+;;(add-to-list 'default-frame-alist '(alpha-background . 95))
+;;(set-frame-parameter (selected-frame) 'alpha 95)
+;;(add-to-list 'default-frame-alist '(alpha . 95))
 ;; Troubleshooting: 
 ;;(set-face-background 'default 'unspecified) 
 (setq menu-bar-mode t)
@@ -74,6 +81,7 @@ These need to be loaded first before the GUI starts
 ;;(load-theme 'doom-ayu-mirage t)
 (setq org-pretty-entities t)
 (setq org-pretty-entities-include-sub-superscripts t)
+
 #+end_src
 
 ** Animations
@@ -108,7 +116,6 @@ These need to be loaded first before the GUI starts
   :config
   (org-xopp-setup))
 
-i
 ;; Set reusable font name variables
 ;;(defvar my/fixed-width-font "JetBrainsMono Nerd Font"
   ;;"The font to use for monospaced (fixed width) text.")
@@ -153,6 +160,24 @@ i
 (use-package! org-tree-slide
   :custom
   (org-image-actual-width nil))
+
+(after! dslide
+  :config
+  ;(define-key org-mode-map (kbd "f5" #' dslide-deck-start))
+  (keymap-set org-mode-map "<f5>" #'dslide-deck-start)
+  (define-key dslide-mode-map (kbd "C->") #'dslide-deck-forward)
+  (define-key dslide-mode-map (kbd "C-<") #'dslide-deck-backward)
+  (define-key dslide-mode-map (kbd "C-L") #'dslide-deck-contents)
+  (define-key dslide-mode-map (kbd "C-:") #'dslide-deck-stop)
+  )
+
+(after! dslide
+  (setq dslide-breadcrumb-separator " ▶ "))
+
+
+;(use-package! dslide)
+
+(use-package! moc)
 
 (use-package! ob-mermaid
   :custom

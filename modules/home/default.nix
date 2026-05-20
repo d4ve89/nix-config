@@ -3,6 +3,7 @@
   imports = [
     ./editor
     ./shell
+    ./media
     ./term
     ./theme
     ./wm

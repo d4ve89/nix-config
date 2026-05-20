@@ -20,6 +20,7 @@
     fd
     btop
     unzip
+    lazygit
     home-manager
   ];
 
@@ -32,6 +33,8 @@
     nerd-fonts.symbols-only
     nerd-fonts.dejavu-sans-mono
     nerd-fonts.iosevka
+    noto-fonts
+    noto-fonts-color-emoji
     newcomputermodern
     lmodern
   ];

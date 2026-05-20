@@ -36,11 +36,39 @@
           source ${config.xdg.configHome}/zsh/p10k.zsh
         '';
         zshConfigLast = lib.mkOrder 1500 ''
-          PATH=/etc/profiles/per-user/david/bin:$PATH
+          PATH=$HOME/.local/bin:/etc/profiles/per-user/david/bin:$PATH
           source ${config.xdg.configHome}/zsh/p10k-stylix.zsh
           source ${config.xdg.configHome}/zsh/syn_highlight-stylix.zsh
           #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#${config.lib.stylix.colors.base03}"
           bindkey '^I^I' autosuggest-accept
+
+          swallow_mpv() {
+          # Minimize ONLY the front Ghostty window (the one that called lobster/curd)
+            osascript -e '
+              tell application "System Events"
+                tell process "Ghostty"
+                  set value of attribute "AXMinimized" of window 1 to true
+                end tell
+              end tell
+            ' >/dev/null 2>&1 || true
+
+            sleep 0.2   # small delay for reliability
+
+            command mpv "$@"
+
+            # Restore all Ghostty windows
+            osascript -e '
+              tell application "System Events"
+                tell process "Ghostty"
+                  set value of attribute "AXMinimized" of every window to false
+                end tell
+              end tell
+              tell application "Ghostty" to activate
+            ' >/dev/null 2>&1 || true
+          }
+
+          mpv() { swallow_mpv "$@"; }
+
           clear
         '';
       in 

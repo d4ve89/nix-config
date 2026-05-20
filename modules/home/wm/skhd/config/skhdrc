@@ -96,10 +96,13 @@ shift + lalt - space : sketchybar --bar hidden=toggle
 
 # Applications
 lalt + cmd - return : open -n /Applications/Ghostty.app
-lalt + cmd - w: open -n /Applications/Zen.app
+#lalt + cmd - w: open -n /Applications/Zen.app
+lalt + cmd - w: open -n "$HOME/Applications/Home Manager Apps/Zen Browser (Twilight).app"
+
 #lalt + cmd - e: open -a Emacs 
-lalt + cmd - e: open -n "~/Applications/Home Manager Apps/Emacs.app"
+lalt + cmd - e: open -a "$HOME/Applications/Home Manager Apps/Emacs.app"
 lalt + cmd - c: open -a Calendar
 lalt + cmd - m: open -a Mail
 lalt + cmd - d: open -a Raycast
-lalt + cmd - q: yabai -m window --close
+lalt + cmd - q: yabai -m window --close || osascript -e 'tell application "System Events" to keystroke "w" using command down'
+
